@@ -92,6 +92,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "financialook"
+    }
+  },
+  "defaultProject": "financialook",
+  "cli": {
+    "analytics": "cdb86ed3-39a4-42ba-8657-e814034503a6"
+  }
 }
