@@ -7,6 +7,7 @@ import {HeaderComponent} from './header.component';
 import {MainComponent} from './main.component';
 import {HomeComponent} from './home.component';
 import {IncomeComponent} from './income.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {IncomeComponent} from './income.component';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     RouterModule.forRoot([
       {path: "Home", component: HomeComponent},
