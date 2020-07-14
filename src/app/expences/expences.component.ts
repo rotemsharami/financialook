@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
 import { MetadataService } from '../metadata.service';
 
@@ -10,15 +10,28 @@ import { MetadataService } from '../metadata.service';
 })
 export class ExpencesComponent implements OnInit {
 	expencesForm: FormGroup;
-	rent: FormControl;
 	dayOfMonth: DayOfMonth[];
-  	constructor(private metadataService: MetadataService){
+	  constructor(
+		  private metadataService: MetadataService,
+		  private fb: FormBuilder
+		){
 		this.dayOfMonth = this.metadataService.getDayOfMonth();
 	}
+	get otherExpences(){
+		return this.expencesForm.get("otherExpences") as FormArray;
+	}
+
+	addOtherExpences(){
+		this.otherExpences.push(this.fb.control(""));
+	}
+
 	ngOnInit(){
 		this.expencesForm = new FormGroup({
 			rent: new FormControl(),
-			rentPayDay: new FormControl()
+			rentPayDay: new FormControl(),
+			propertyTax: new FormControl(),
+			propertyTaxPayDay: new FormControl(),
+			otherExpences: this.fb.array([])
 	   });		
 	}
 
