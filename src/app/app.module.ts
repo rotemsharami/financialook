@@ -8,6 +8,7 @@ import {MainComponent} from './main.component';
 import {HomeComponent} from './home.component';
 import {IncomeComponent} from './income.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ExpencesComponent } from './expences/expences.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     MainComponent,
     HomeComponent,
-    IncomeComponent
+    IncomeComponent,
+    ExpencesComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     RouterModule.forRoot([
       {path: "Home", component: HomeComponent},
-      {path: "Income", component: IncomeComponent}
+      {path: "Income", component: IncomeComponent},
+      {path: "Expences", component: ExpencesComponent}
     ]),
 
 

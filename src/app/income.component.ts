@@ -1,6 +1,7 @@
 
 import {Component, OnInit} from "@angular/core";
 import {FormControl} from "@angular/forms";
+import { MetadataService } from './metadata.service';
 
 @Component({
     selector: 'Income',
@@ -9,17 +10,11 @@ import {FormControl} from "@angular/forms";
 })
 
 export class IncomeComponent implements OnInit{
-
-    incomeFormControl: FormControl = new FormControl("");
-
-    constructor(){
-        
-    }
-
+    SalaryFormControl: FormControl = new FormControl("");
+    constructor(){}
     ngOnInit(){
-        this.incomeFormControl.valueChanges.subscribe((value : string) => {
+        this.SalaryFormControl.valueChanges.subscribe((value : string) => {
             console.log(value);
         })
     }
-
 }

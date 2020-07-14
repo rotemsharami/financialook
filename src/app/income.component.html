@@ -1,8 +1,19 @@
-<div>
-    Income
-    <input type="text" [formControl]="incomeFormControl" />
-
-
-    <p>{{incomeFormControl.value}}</p>
-
+<div class="section col-12">
+    <div class="form_line row">
+        <div class="form_field">
+            <div class="form_field_input">
+                <input type="text" [formControl]="SalaryFormControl" />
+            </div>
+            <div class="form_field_label">
+                <label>Salary</label>
+            </div>
+        </div>
+        <div class="form_field">
+            <div class="form_field_input"></div>
+            <div class="form_field_label">
+                <label>Payday</label>
+            </div>
+        </div>
+    </div>
+    <p>{{SalaryFormControl.value}}</p>
 </div>
