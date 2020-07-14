@@ -1,9 +1,9 @@
-<form formGroup="expencesForm">
+<form [formGroup]="expencesForm">
 <div class="section col-12">
     <div class="form_line row">
         <div class="form_field">
             <div class="form_field_input">
-                <input type="text" [formControlName]="rentFormControl" />
+                <input type="text" formControlName="rent" />
             </div>
             <div class="form_field_label">
                 <label>Rent</label>
@@ -11,9 +11,9 @@
         </div>
         <div class="form_field">
             <div class="form_field_input">
-                <select formControlName="rentPayDayFormControl">
+                <select formControlName="rentPayDay">
                     <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                      {{ day.name }}
+                        {{ day.name }}
                     </option>
                   </select>
             </div>

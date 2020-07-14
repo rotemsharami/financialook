@@ -9,21 +9,17 @@ import { MetadataService } from '../metadata.service';
   styleUrls: ['./expences.component.scss']
 })
 export class ExpencesComponent implements OnInit {
-
-	
-	expencesForm = new FormGroup({
-		rentFormControl: new FormControl(),
-		rentPayDayFormControl: new FormControl()
-   });
-
-
-
+	expencesForm: FormGroup;
+	rent: FormControl;
 	dayOfMonth: DayOfMonth[];
   	constructor(private metadataService: MetadataService){
 		this.dayOfMonth = this.metadataService.getDayOfMonth();
 	}
-  ngOnInit(){
-	  
-  }
+	ngOnInit(){
+		this.expencesForm = new FormGroup({
+			rent: new FormControl(),
+			rentPayDay: new FormControl()
+	   });		
+	}
 
 }
