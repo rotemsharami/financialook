@@ -1,77 +1,38 @@
-<form [formGroup]="expencesForm">
+
 <div class="section col-12">
-    <div class="form_line row">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" formControlName="rent" />
-            </div>
-            <div class="form_field_label">
-                <label>Rent</label>
-            </div>
-        </div>
-        <div class="form_field">
-            <div class="form_field_input">
-                <select formControlName="rentPayDay">
-                    <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                        {{ day.name }}
-                    </option>
-                  </select>
-            </div>
-            <div class="form_field_label">
-                <label>Payday</label>
-            </div>
-        </div>
+
+    <div>
+        Value: {{ expencesForm.value | json }}
     </div>
 
-    <div class="form_line row">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" formControlName="propertyTax" />
-            </div>
-            <div class="form_field_label">
-                <label>Property Tax</label>
-            </div>
-        </div>
-        <div class="form_field">
-            <div class="form_field_input">
-                <select formControlName="propertyTaxPayDay">
-                    <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                        {{ day.name }}
-                    </option>
-                  </select>
-            </div>
-            <div class="form_field_label">
-                <label>Payday</label>
-            </div>
-        </div>
-    </div>
+    <form [formGroup]="expencesForm">
+        <mat-form-field>
+            <input matInput placeholder="rent" formControlName="rent">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Rent Pay Day" formControlName="rentPayDay">
+        </mat-form-field>
 
-    <button type="button" (click)="addOtherExpences()">Add Other Expences</button>
-    <div formArrayName="otherExpences" class="form_line row" *ngFor="let item of otherExpences.controls; let i=index">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" formControlName="i+a"/>
-            </div>
-            <div class="form_field_label">
-                <label>Property Tax</label>
-            </div>
-        </div>
-        <div class="form_field">
-            <div class="form_field_input">
-                <select formControlName="i+b">
-                    <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                        {{ day.name }}
-                    </option>
-                  </select>
-            </div>
-            <div class="form_field_label">
-                <label>Payday</label>
+        <div formControlName="otherExpences">
+            <div *ngFor="let phone of otherExpencesForm.controls; let i=index" [formGroupName]="i">
+                <mat-form-field>
+                    <input matInput placeholder="Title" formControlName="title">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Amount" formControlName="amount">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Pay Day" formControlName="payDay">
+                </mat-form-field>
+                <button mat-raised-button color="warn" (click)="removeOterExpences(i)">Remove</button>
             </div>
         </div>
-    </div>
-    
+        <button mat-raised-button color="primary" (click)="addOterExpences()">add Oter Expences</button>
 
+    </form>
+
+
+   
 
 
 </div>
-</form>
