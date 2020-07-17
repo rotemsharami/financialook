@@ -10,29 +10,33 @@ import { MetadataService } from '../metadata.service';
 })
 export class ExpencesComponent implements OnInit {
 	expencesForm: FormGroup;
-	dayOfMonth: DayOfMonth[];
+	dayOfMonthItems: DayOfMonth[];
 	  constructor(
 		  private metadataService: MetadataService,
 		  private fb: FormBuilder
 		){
-		this.dayOfMonth = this.metadataService.getDayOfMonth();
-	}
-	get otherExpences(){
-		return this.expencesForm.get("otherExpences") as FormArray;
+		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
 	}
 
 	addOtherExpences(){
-		this.otherExpences.push(this.fb.control(""));
+		const item = this.fb.group({
+			title: "",
+			amount:"",
+			dayOfmonth: ""
+		})
+		this.otherExpencesForm.push(item);
+	}
+	removeOtherExpence(i){
+		this.otherExpencesForm.removeAt(i)
 	}
 
 	ngOnInit(){
 		this.expencesForm = new FormGroup({
-			rent: new FormControl(),
-			rentPayDay: new FormControl(),
-			propertyTax: new FormControl(),
-			propertyTaxPayDay: new FormControl(),
 			otherExpences: this.fb.array([])
-	   });		
+		})
+	}
+	get otherExpencesForm(){
+		return this.expencesForm.get("otherExpences") as FormArray
 	}
 
 }

@@ -1,77 +1,29 @@
-<form [formGroup]="expencesForm">
-<div class="section col-12">
-    <div class="form_line row">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" formControlName="rent" />
+
+    <div class="section col-12">
+        <form [formGroup]="expencesForm">
+            <div class="form_line row">
+                {{ expencesForm.value | json }}
             </div>
-            <div class="form_field_label">
-                <label>Rent</label>
+            <button mat-raised-button color="primary" (click)="addOtherExpences()">Add</button>
+            <div formArrayName="otherExpences">
+                <div class="form_line row" *ngFor="let item of otherExpencesForm.controls; let i=index;" [formGroupName]="i">
+                    <mat-form-field>
+                        <input matInput placeholder="title" formControlName="title">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput placeholder="amount" formControlName="amount">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-select placeholder="title" formControlName="dayOfmonth">
+                            <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="day.id">{{day.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
             </div>
-        </div>
-        <div class="form_field">
-            <div class="form_field_input">
-                <select formControlName="rentPayDay">
-                    <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                        {{ day.name }}
-                    </option>
-                  </select>
-            </div>
-            <div class="form_field_label">
-                <label>Payday</label>
-            </div>
-        </div>
+        
+
+        </form>
     </div>
-
-    <div class="form_line row">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" formControlName="propertyTax" />
-            </div>
-            <div class="form_field_label">
-                <label>Property Tax</label>
-            </div>
-        </div>
-        <div class="form_field">
-            <div class="form_field_input">
-                <select formControlName="propertyTaxPayDay">
-                    <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                        {{ day.name }}
-                    </option>
-                  </select>
-            </div>
-            <div class="form_field_label">
-                <label>Payday</label>
-            </div>
-        </div>
-    </div>
-
-    <button type="button" (click)="addOtherExpences()">Add Other Expences</button>
-    <div formArrayName="otherExpences" class="form_line row" *ngFor="let item of otherExpences.controls; let i=index">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" formControlName="i+a"/>
-            </div>
-            <div class="form_field_label">
-                <label>Property Tax</label>
-            </div>
-        </div>
-        <div class="form_field">
-            <div class="form_field_input">
-                <select formControlName="i+b">
-                    <option *ngFor="let day of dayOfMonth" [ngValue]="day.id">
-                        {{ day.name }}
-                    </option>
-                  </select>
-            </div>
-            <div class="form_field_label">
-                <label>Payday</label>
-            </div>
-        </div>
-    </div>
-    
-
-
-
-</div>
-</form>
