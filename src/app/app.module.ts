@@ -15,7 +15,9 @@ import {MatSelectModule } from '@angular/material/select';
 import {MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule } from '@angular/material/checkbox';
 import {MatChipsModule } from '@angular/material/chips';
+import {MatIconModule } from '@angular/material/icon';
 import { CookieService } from "ngx-cookie-service";
+import { BasicDisplayComponent } from './basic-display/basic-display.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { CookieService } from "ngx-cookie-service";
     MainComponent,
     HomeComponent,
     IncomeComponent,
-    ExpencesComponent
+    ExpencesComponent,
+    BasicDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { CookieService } from "ngx-cookie-service";
     MatButtonModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatIconModule,
     AppRoutingModule,
     RouterModule.forRoot([
       {path: "Home", component: HomeComponent},

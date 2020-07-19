@@ -1,19 +1,35 @@
 <div class="section col-12">
-    <div class="form_line row">
-        <div class="form_field">
-            <div class="form_field_input">
-                <input type="text" [formControl]="SalaryFormControl" />
-            </div>
-            <div class="form_field_label">
-                <label>Salary</label>
+    <form [formGroup]="incomeForm">
+        <br>
+        <div class="basicExpences row">
+            <h1>Income</h1>
+        </div>
+        <div formArrayName="incomes">
+            <div class="form_line row" *ngFor="let item of IncomeFormObj.controls; let i=index;" [formGroupName]="i">
+                <mat-form-field>
+                    <input matInput placeholder="Title" formControlName="title">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Amount" formControlName="amount">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
+                        <mat-option *ngFor="let item of methodsofPaymentItems; let i=index;" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Pay Day" formControlName="payDay">
+                        <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="day.id">{{day.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-icon-button aria-label="Remove" (click)="removeIncome(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
             </div>
         </div>
-        <div class="form_field">
-            <div class="form_field_input"></div>
-            <div class="form_field_label">
-                <label>Payday</label>
-            </div>
+        <div class="addOtherExpencesButton row">
+            <button mat-raised-button color="primary" (click)="addIncome()">Add</button>
         </div>
-    </div>
-    <p>{{SalaryFormControl.value}}</p>
+        <br>
+    </form>
 </div>

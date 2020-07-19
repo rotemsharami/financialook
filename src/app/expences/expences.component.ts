@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
 import { MethodsofPayment } from '../interfaces/BasicInterfaceses';
-
 import { MetadataService } from '../metadata.service';
 @Component({
   selector: 'app-expences',
@@ -34,15 +33,8 @@ export class ExpencesComponent implements OnInit {
 	}
 	ngOnInit(){
 		const data = this.metadataService.getData();
-		var rentcurrentValue = "";
-		var rentpayDayValue = "";
 		if(data.expences != undefined){
-			console.log(data);
-			rentcurrentValue = data.expences.rent;
-			rentpayDayValue = data.expences.rentpayDay;
 			this.expencesForm = new FormGroup({
-				rent: new FormControl(rentcurrentValue),
-				rentpayDay: new FormControl(rentpayDayValue),
 				otherExpences: this.fb.array([])
 			});
 			if(data.expences != undefined){
@@ -60,8 +52,6 @@ export class ExpencesComponent implements OnInit {
 			}
 		}else{
 			this.expencesForm = new FormGroup({
-				rent: new FormControl(rentcurrentValue),
-				rentpayDay: new FormControl(rentpayDayValue),
 				otherExpences: this.fb.array([])
 			});
 		}
