@@ -16,13 +16,22 @@ export class MetadataService {
 	};
 
 	updateData(data): void{
-		const cookieExists = this.cookieServic.check("fl-data");
-		const dataString = JSON.stringify(data);
-		console.log(dataString);
-		if(cookieExists){
-
+		if(this.cookieServic.check("fl-data")){
+			var basicInfo = JSON.parse(this.cookieServic.get("fl-data"));
+			basicInfo[data.type] = data.data;
+		}else{
+			basicInfo = {};
+			basicInfo[data.type] = data.data;
 		}
-		
+		this.cookieServic.set("fl-data", JSON.stringify(basicInfo));
+	}
+	getData(){
+		if(this.cookieServic.check("fl-data")){
+			return JSON.parse(this.cookieServic.get("fl-data"));
+		}
+		else{
+			return false;
+		}
 	}
 	
 	constructor(private cookieServic: CookieService) {
