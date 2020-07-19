@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
+import { MethodsofPayment } from '../interfaces/BasicInterfaceses';
+
 import { MetadataService } from '../metadata.service';
 @Component({
   selector: 'app-expences',
@@ -10,17 +12,20 @@ import { MetadataService } from '../metadata.service';
 export class ExpencesComponent implements OnInit {
 	expencesForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
+	methodsofPaymentItems: MethodsofPayment[];
 	  constructor(
 		  private metadataService: MetadataService,
 		  private fb: FormBuilder
 		){
 		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
+		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
 	}
 	addOtherExpences(){
 		const item = this.fb.group({
 			title: "",
 			amount:"",
-			payDay: ""
+			payDay: "",
+			methodsofPayment: ""
 		})
 		this.otherExpencesForm.push(item);
 	}
@@ -46,7 +51,8 @@ export class ExpencesComponent implements OnInit {
 						const item = this.fb.group({
 							title: obj.title,
 							amount: obj.amount,
-							payDay: obj.payDay
+							payDay: obj.payDay,
+							methodsofPayment: obj.methodsofPayment
 						})
 						this.otherExpencesForm.push(item);
 					});
@@ -59,20 +65,11 @@ export class ExpencesComponent implements OnInit {
 				otherExpences: this.fb.array([])
 			});
 		}
-
-		
-
-
-
 		this.expencesForm.valueChanges.subscribe(val => {
-			// this.currentExpencesForm.concat();
 			this.metadataService.updateData({type: "expences", data: this.expencesForm.value});
 		});
 	}
 	get otherExpencesForm(){
 		return this.expencesForm.get("otherExpences") as FormArray
 	}
-
-
-	
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DayOfMonth } from './interfaces/DayOfMonth';
+import { MethodsofPayment } from './interfaces/BasicInterfaceses';
 import { CookieService } from "ngx-cookie-service";
 
 @Injectable({
@@ -8,12 +9,24 @@ import { CookieService } from "ngx-cookie-service";
 export class MetadataService {
 	private cookieValue: String;
 	getDayOfMonth(): DayOfMonth[] {
-		return [
-			{name: '1', id: '1'},
-			{name: '2', id: '2'},
-			{name: '3', id: '3'}
-		]
+		const data = [];
+		for (var i = 1; i <= 31; i++) {
+			data.push({name: i, id: i});
+		}
+		return data;
 	};
+
+	getMethodsofPayment(): MethodsofPayment[] {
+		const data = [
+			{name: "Credit Card", id: "1"},
+			{name: "Bank transfer", id: "2"},
+			{name: "Cash", id: "3"},
+			{name: "Check", id: "4"},
+		
+		];
+		return data;
+	};
+
 
 	updateData(data): void{
 		if(this.cookieServic.check("fl-data")){
