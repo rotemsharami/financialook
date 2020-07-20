@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from './interfaces/DayOfMonth';
 import { MethodsofPayment } from './interfaces/BasicInterfaceses';
 import { MetadataService } from './metadata.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
     selector: 'Income',
@@ -14,6 +15,7 @@ export class IncomeComponent implements OnInit{
     incomeForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
 	methodsofPaymentItems: MethodsofPayment[];
+	
 	fLdata: any;
 	  constructor(
 		  private metadataService: MetadataService,
@@ -36,6 +38,13 @@ export class IncomeComponent implements OnInit{
 		this.IncomeFormObj.removeAt(i)
 	}
 	ngOnInit(){
+
+		this.metadataService.updatedDataSource$.subscribe(
+			data => {
+				console.log(data);
+			}
+		);
+
 		this.fLdata = this.metadataService.getData();
 		if(this.fLdata.income != undefined){
 			this.incomeForm = new FormGroup({
@@ -59,8 +68,12 @@ export class IncomeComponent implements OnInit{
 				incomes: this.fb.array([])
 			});
 		}
+
+		
+		
 		this.incomeForm.valueChanges.subscribe(val => {
-			this.metadataService.updateData({type: "income", data: this.incomeForm.value});
+			this.metadataService.updateDataSource({type: "income", data: this.incomeForm.value});
+			//this.metadataService.updateData({type: "income", data: this.incomeForm.value});
 			this.fLdata.income = this.incomeForm.value;
 		});
 	}
