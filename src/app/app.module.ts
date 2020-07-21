@@ -18,6 +18,9 @@ import {MatChipsModule } from '@angular/material/chips';
 import {MatIconModule } from '@angular/material/icon';
 import { CookieService } from "ngx-cookie-service";
 import { BasicDisplayComponent } from './basic-display/basic-display.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,7 @@ import { BasicDisplayComponent } from './basic-display/basic-display.component';
     HomeComponent,
     IncomeComponent,
     ExpencesComponent,
-    BasicDisplayComponent
+    BasicDisplayComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,8 @@ import { BasicDisplayComponent } from './basic-display/basic-display.component';
       {path: "Income", component: IncomeComponent},
       {path: "Expences", component: ExpencesComponent}
     ]),
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 
 
   ],
