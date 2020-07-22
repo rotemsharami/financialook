@@ -19,8 +19,15 @@ import {MatIconModule } from '@angular/material/icon';
 import { CookieService } from "ngx-cookie-service";
 import { BasicDisplayComponent } from './basic-display/basic-display.component';
 import { StoreModule } from '@ngrx/store';
+
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
+import { EffectsModule } from '@ngrx/effects';
+
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +40,7 @@ import { environment } from '../environments/environment';
     BasicDisplayComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -50,6 +58,8 @@ import { environment } from '../environments/environment';
     ]),
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EntityDataModule.forRoot(entityConfig),
+    EffectsModule.forRoot([]),
 
 
   ],

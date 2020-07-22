@@ -130,6 +130,7 @@
   },
   "defaultProject": "financialook",
   "cli": {
-    "analytics": "cdb86ed3-39a4-42ba-8657-e814034503a6"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": "1c1ac437-8280-432b-bced-368b345c827a"
   }
 }
