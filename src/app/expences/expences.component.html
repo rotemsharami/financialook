@@ -1,20 +1,11 @@
-
 <div class="section col-12">
-
-    <div>
-        Value: {{ expencesForm.value | json }}
-    </div>
-
     <form [formGroup]="expencesForm">
-        <mat-form-field>
-            <input matInput placeholder="rent" formControlName="rent">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Rent Pay Day" formControlName="rentPayDay">
-        </mat-form-field>
-
-        <div formControlName="otherExpences">
-            <div *ngFor="let phone of otherExpencesForm.controls; let i=index" [formGroupName]="i">
+        <br>
+        <div class="basicExpences row">
+            <h2>Monthly Expences</h2>
+        </div>
+        <div formArrayName="otherExpences">
+            <div class="form_line row" *ngFor="let item of otherExpencesForm.controls; let i=index;" [formGroupName]="i">
                 <mat-form-field>
                     <input matInput placeholder="Title" formControlName="title">
                 </mat-form-field>
@@ -22,17 +13,23 @@
                     <input matInput placeholder="Amount" formControlName="amount">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Pay Day" formControlName="payDay">
+                    <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
+                        <mat-option *ngFor="let item of methodsofPaymentItems; let i=index;" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
                 </mat-form-field>
-                <button mat-raised-button color="warn" (click)="removeOterExpences(i)">Remove</button>
+                <mat-form-field>
+                    <mat-select placeholder="Pay Day" formControlName="payDay">
+                        <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="day.id">{{day.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-icon-button aria-label="Remove" (click)="removeOtherExpence(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
             </div>
         </div>
-        <button mat-raised-button color="primary" (click)="addOterExpences()">add Oter Expences</button>
-
+        <div class="addOtherExpencesButton row">
+            <button mat-raised-button color="primary" (click)="addOtherExpences()">Add</button>
+        </div>
+        <br>
     </form>
-
-
-   
-
-
 </div>
