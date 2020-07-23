@@ -7,25 +7,22 @@ import {mergeMap} from "rxjs/operators"
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class IncomsEffects implements OnInitEffects{
-	private _incomsService: EntityCollectionService<Income>;
-
+export class IncomesEffects implements OnInitEffects{
+	private _incomesService: EntityCollectionService<Income>;
 	@Effect()
-	initIncoms$: Observable<Income[]> = this.actions$.pipe(
-		ofType("INIT_EXPENCES"),
+	initIncomes$: Observable<Income[]> = this.actions$.pipe(
+		ofType("INIT_INCOMES"),
 		mergeMap(() => {
-			return this._incomsService.getAll()
+			return this._incomesService.getAll()
 		})
 		
 	)
-
-
 	ngrxOnInitEffects(): Action{
 		return {
-			type: "INIT_EXPENCES"
+			type: "INIT_INCOMES"
 		}
 	}
 	constructor(private actions$: Actions, serviceFactory: EntityCollectionServiceFactory) {
-		this._incomsService = serviceFactory.create("Incoms")
+		this._incomesService = serviceFactory.create("Incomes")
 	}
 }

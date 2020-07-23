@@ -26,7 +26,7 @@ import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 
-import {IncomsModule} from "../incoms/incoms.module"
+import {IncomesModule} from "../incoms/incomes.module"
 
 @NgModule({
   declarations: [
@@ -60,7 +60,7 @@ import {IncomsModule} from "../incoms/incoms.module"
     EntityDataModule.forRoot(entityConfig),
     EffectsModule.forRoot([]),
     HttpClientModule,
-    IncomsModule
+    IncomesModule
   ],
   providers: [
     {provide: DefaultDataServiceConfig, useValue: {
