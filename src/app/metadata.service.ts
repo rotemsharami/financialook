@@ -8,17 +8,6 @@ import {Subject} from "rxjs";
 	providedIn: 'root'
 })
 export class MetadataService {
-<<<<<<< HEAD
-  getDayOfMonth(): DayOfMonth[] {
-    return [
-      	{name: '1', id: '1'},
-      	{name: '2', id: '2'},
-      	{name: '3', id: '3'}
-    ]
-  };
-
-  constructor() { }
-=======
 	private cookieValue: String;
 	private dataSource = new Subject<any>();
 	updatedDataSource$ = this.dataSource.asObservable();
@@ -83,5 +72,4 @@ export class MetadataService {
 	}
 	
 
->>>>>>> eeb39643825bcb67cc23001d75a8c825fcc05ffe
 }

@@ -8,52 +8,17 @@ import { MetadataService } from '../metadata.service';
   templateUrl: './expences.component.html',
   styleUrls: ['./expences.component.scss']
 })
-
 export class ExpencesComponent implements OnInit {
 	expencesForm: FormGroup;
-<<<<<<< HEAD
-	dayOfMonth: DayOfMonth[];
-	constructor(
-		private metadataService: MetadataService,
-		private fb: FormBuilder
-=======
 	dayOfMonthItems: DayOfMonth[];
 	methodsofPaymentItems: MethodsofPayment[];
 	  constructor(
 		  private metadataService: MetadataService,
 		  private fb: FormBuilder
->>>>>>> eeb39643825bcb67cc23001d75a8c825fcc05ffe
 		){
 		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
 		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
 	}
-<<<<<<< HEAD
-	ngOnInit(){
-		this.expencesForm = this.fb.group({
-			rent: "",
-			rentPayDay: '',
-			propertyTax: '',
-			propertyTaxPayDay: '',
-			otherExpences: this.fb.array([])
-	   });
-	   
-	   this.expencesForm.valueChanges.subscribe(console.log);
-	}
-	get otherExpencesForm(){
-		return this.expencesForm.get("otherExpences") as FormArray
-	}
-	
-	addOterExpences(){
-		const item = this.fb.group({
-			title:[],
-			amount: [],
-			payDay:[]
-		})
-		this.otherExpencesForm.push(item);
-	}
-	removeOterExpences(i){
-		this.otherExpencesForm.removeAt(i);
-=======
 	addOtherExpences(){
 		const item = this.fb.group({
 			title: "",
@@ -96,6 +61,5 @@ export class ExpencesComponent implements OnInit {
 	}
 	get otherExpencesForm(){
 		return this.expencesForm.get("otherExpences") as FormArray
->>>>>>> eeb39643825bcb67cc23001d75a8c825fcc05ffe
 	}
 }
