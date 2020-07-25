@@ -39,11 +39,8 @@ export class IncomeComponent implements OnInit{
 	}
 	ngOnInit(){
 
-		this.metadataService.updatedDataSource$.subscribe(
-			data => {
-				console.log(data);
-			}
-		);
+
+		
 
 		this.fLdata = this.metadataService.getData();
 		if(this.fLdata.income != undefined){
@@ -72,7 +69,7 @@ export class IncomeComponent implements OnInit{
 		
 		
 		this.incomeForm.valueChanges.subscribe(val => {
-			this.metadataService.updateDataSource({type: "income", data: this.incomeForm.value});
+			// this.metadataService.updateDataSource({type: "income", data: this.incomeForm.value});
 			//this.metadataService.updateData({type: "income", data: this.incomeForm.value});
 			this.fLdata.income = this.incomeForm.value;
 		});

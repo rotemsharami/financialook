@@ -23,10 +23,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EntityDataModule, DefaultDataServiceConfig } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
-import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import {IncomesModule} from "../incomes/incomes.module";
+import { reducers, metaReducers } from './reducers'
 
-import {IncomesModule} from "../incoms/incomes.module"
 
 @NgModule({
   declarations: [
@@ -55,12 +56,18 @@ import {IncomesModule} from "../incoms/incomes.module"
       {path: "Income", component: IncomeComponent},
       {path: "Expences", component: ExpencesComponent}
     ]),
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EntityDataModule.forRoot(entityConfig),
     EffectsModule.forRoot([]),
-    HttpClientModule,
-    IncomesModule
+    IncomesModule,
+    
   ],
   providers: [
     {provide: DefaultDataServiceConfig, useValue: {

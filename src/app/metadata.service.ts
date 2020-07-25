@@ -2,31 +2,22 @@ import { Injectable } from '@angular/core';
 import { DayOfMonth } from './interfaces/DayOfMonth';
 import { MethodsofPayment } from './interfaces/BasicInterfaceses';
 import { CookieService } from "ngx-cookie-service";
-import {Subject} from "rxjs";
+
 
 @Injectable({
 	providedIn: 'root'
 })
 export class MetadataService {
 	private cookieValue: String;
-	private dataSource = new Subject<any>();
-	updatedDataSource$ = this.dataSource.asObservable();
+	
 	constructor(private cookieServic: CookieService) {
 		
 	}
 
-	updateDataSource(data: any){
-		this.dataSource.next((data: any)=>{
-			this.updatedDataSource$[data.type] = data.data;
-		});
-	}
 
 
-	getDataSource(){
-		this.dataSource.next(()=>{
-			return this.updatedDataSource$;
-		});
-	}
+
+
 
 
 

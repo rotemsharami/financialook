@@ -5,24 +5,24 @@ import { EntityCollectionServiceFactory, EntityCollectionService} from "@ngrx/da
 import { Income } from './income';
 import {mergeMap} from "rxjs/operators"
 import { Observable } from 'rxjs';
+import {HttpClient} from "@angular/common/http"
+
 
 @Injectable()
 export class IncomesEffects implements OnInitEffects{
-	private _incomesService: EntityCollectionService<Income>;
-	@Effect()
+	//private _incomesService: EntityCollectionService<Income>;
+	//@Effect()
 	initIncomes$: Observable<Income[]> = this.actions$.pipe(
-		ofType("INIT_INCOMES"),
-		mergeMap(() => {
-			return this._incomesService.getAll()
-		})
+		ofType("[IncomesEffects] INIT"),
+		mergeMap((action) => )
 		
 	)
 	ngrxOnInitEffects(): Action{
 		return {
-			type: "INIT_INCOMES"
+			type: "[IncomesEffects] INIT"
 		}
 	}
-	constructor(private actions$: Actions, serviceFactory: EntityCollectionServiceFactory) {
-		this._incomesService = serviceFactory.create("Incomes")
+	constructor(private actions$: Actions) {
+		//this._incomesService = serviceFactory.create("Incomes")
 	}
 }
