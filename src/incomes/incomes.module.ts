@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { ENTITY_METADATA_TOKEN, PLURAL_NAMES_TOKEN } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
-import { IncomesEffects } from './incomes.effects';
 
 
 
@@ -11,7 +10,7 @@ import { IncomesEffects } from './incomes.effects';
   declarations: [],
   imports: [
     CommonModule,
-    EffectsModule.forFeature([IncomesEffects]),
+    //EffectsModule.forFeature([IncomesEffects]),
     //StoreModule.forFeature("Incomes")
   ],
   providers:[

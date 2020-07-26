@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DayOfMonth } from './interfaces/DayOfMonth';
 import { MethodsofPayment } from './interfaces/BasicInterfaceses';
 import { CookieService } from "ngx-cookie-service";
+import { Store, State } from '@ngrx/store';
 
 
 @Injectable({
@@ -9,20 +10,12 @@ import { CookieService } from "ngx-cookie-service";
 })
 export class MetadataService {
 	private cookieValue: String;
-	
-	constructor(private cookieServic: CookieService) {
+	constructor(
+		private cookieServic: CookieService,
+		
+		) {
 		
 	}
-
-
-
-
-
-
-
-
-	
-
 	getDayOfMonth(): DayOfMonth[] {
 		const data = [];
 		for (var i = 1; i <= 31; i++) {
@@ -30,7 +23,6 @@ export class MetadataService {
 		}
 		return data;
 	};
-
 	getMethodsofPayment(): MethodsofPayment[] {
 		const data = [
 			{name: "Credit Card", id: "1"},
@@ -41,8 +33,6 @@ export class MetadataService {
 		];
 		return data;
 	};
-
-
 	updateData(data): void{
 		if(this.cookieServic.check("fl-data")){
 			var basicInfo = JSON.parse(this.cookieServic.get("fl-data"));
@@ -62,5 +52,4 @@ export class MetadataService {
 		}
 	}
 	
-
 }

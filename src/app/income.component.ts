@@ -38,11 +38,8 @@ export class IncomeComponent implements OnInit{
 		this.IncomeFormObj.removeAt(i)
 	}
 	ngOnInit(){
-
-
-		
-
 		this.fLdata = this.metadataService.getData();
+		//console.log(this.fLdata);
 		if(this.fLdata.income != undefined){
 			this.incomeForm = new FormGroup({
 				incomes: this.fb.array([])
@@ -71,6 +68,7 @@ export class IncomeComponent implements OnInit{
 		this.incomeForm.valueChanges.subscribe(val => {
 			// this.metadataService.updateDataSource({type: "income", data: this.incomeForm.value});
 			//this.metadataService.updateData({type: "income", data: this.incomeForm.value});
+			console.log( this.incomeForm.value);
 			this.fLdata.income = this.incomeForm.value;
 		});
 	}
