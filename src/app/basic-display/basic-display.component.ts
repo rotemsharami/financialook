@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { IncomesModule } from '../../incomes/incomes.module'
-import { AppState } from './../app.state';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as ToDoActions from '../incomes/incomes.actions';
+import Income  from '../incomes/incomes.model'
+import ToDoState, { initializeState } from '../incomes/todo.state';
 
 @Component({
   selector: 'app-basic-display',
@@ -11,23 +13,42 @@ import { AppState } from './../app.state';
 })
 export class BasicDisplayComponent implements OnInit {
 
-  // Section 1
-  public incomes: Observable<IncomesModule[]>;
-
-  // Section 2
-  constructor(private _store: Store<AppState>) { 
-    this.incomes = this._store.select('income');
+  constructor(private store: Store<{ todos: ToDoState }>) {
+    this.todo$ = store.pipe(select('todos'));
   }
 
-  // constructor(private store: Store<AppState>) {
-  //   store.select('income').subscribe(val => this.incomes = val);
-  //   console.log(this.incomes);
-  // }
-
-
-
   ngOnInit() {
-    console.log(this.incomes);
+    this.ToDoSubscription = this.todo$
+      .pipe(
+        map(x => {
+          this.ToDoList = x.incomes;
+          this.todoError = x.ToDoError;
+        })
+      )
+      .subscribe();
+    this.store.dispatch(ToDoActions.BeginGetToDoAction());
+  }
+
+  todo$: Observable<ToDoState>;
+  ToDoSubscription: Subscription;
+  ToDoList: Income[] = [];
+
+  Title: string = '';
+  IsCompleted: boolean = false;
+
+  todoError: Error = null;
+
+  createToDo() {
+    // const todo: Income = { Title: this.Title, IsCompleted: this.IsCompleted };
+    // this.store.dispatch(ToDoActions.BeginCreateToDoAction({ payload: todo }));
+    // this.Title = '';
+    // this.IsCompleted = false;
+  }
+
+  ngOnDestroy() {
+    if (this.ToDoSubscription) {
+      //this.ToDoSubscription.unsubscribe();
+    }
   }
   
 }
