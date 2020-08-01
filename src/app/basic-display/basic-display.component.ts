@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MetadataService } from '../metadata.service';
-import { Store, select } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { Income } from 'src/incomes/income';
-import { State } from "../reducers/incomes.reducer"
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { IncomesModule } from '../../incomes/incomes.module'
+import { AppState } from './../app.state';
 
 @Component({
   selector: 'app-basic-display',
@@ -11,27 +10,24 @@ import { State } from "../reducers/incomes.reducer"
   styleUrls: ['./basic-display.component.scss']
 })
 export class BasicDisplayComponent implements OnInit {
-  incomes$: Observable<any[]> = this._store$.pipe(
-    select("incomes")
-  )
-  // fLdata: any;
-  // monthlyIncome: number;
-  constructor(
-    private metadataService: MetadataService,
-    private _store$: Store<State>
-    ) {
-	// this.fLdata = this.metadataService.getData();
-	// this.monthlyIncome = 0;
+
+  // Section 1
+  public incomes: Observable<IncomesModule[]>;
+
+  // Section 2
+  constructor(private _store: Store<AppState>) { 
+    this.incomes = this._store.select('income');
   }
 
-  ngOnInit(): void {
-    console.log(this.incomes$);
-    // if(this.fLdata.income != undefined){
-    //   if(this.fLdata.income.incomes != undefined){
-    //     this.fLdata.income.incomes.forEach((obj, index) => {
-    //       this.monthlyIncome += parseInt(obj.amount)
-    //     });
-    //   }
-    // }
+  // constructor(private store: Store<AppState>) {
+  //   store.select('income').subscribe(val => this.incomes = val);
+  //   console.log(this.incomes);
+  // }
+
+
+
+  ngOnInit() {
+    console.log(this.incomes);
   }
+  
 }

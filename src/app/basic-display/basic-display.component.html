@@ -6,9 +6,8 @@
 <div class="row">
     <table>
         <tbody>
-            <tr>
-                <td>Income:</td>
-                <td>{{incomes$ | async}}</td>
+            <tr *ngFor="let item of incomes | async">
+                <td>{{item.title}}</td>
             </tr>
         </tbody>
     </table>

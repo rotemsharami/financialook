@@ -21,12 +21,8 @@ import { BasicDisplayComponent } from './basic-display/basic-display.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { EntityDataModule, DefaultDataServiceConfig } from '@ngrx/data';
-import { entityConfig } from './entity-metadata';
 import { HttpClientModule } from '@angular/common/http';
-import { EffectsModule } from '@ngrx/effects';
-import {IncomesModule} from "../incomes/incomes.module";
-import { reducers, metaReducers } from './reducers'
+import  {reducer} from "./reducers/incomes.reducer"
 
 
 @NgModule({
@@ -56,23 +52,10 @@ import { reducers, metaReducers } from './reducers'
       {path: "Income", component: IncomeComponent},
       {path: "Expences", component: ExpencesComponent}
     ]),
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
+    StoreModule.forRoot({
+      incomes: reducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EntityDataModule.forRoot(entityConfig),
-    EffectsModule.forRoot([]),
-    IncomesModule,
-    
-  ],
-  providers: [
-    {provide: DefaultDataServiceConfig, useValue: {
-      root:"http://localhost:3000"
-    }}
   ],
   bootstrap: [AppComponent]
 })

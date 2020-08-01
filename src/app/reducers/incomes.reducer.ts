@@ -1,24 +1,24 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { Income } from 'src/incomes/income';
-import { setIncomes } from "../actions/incomes.actions"
-export const incomesFeatureKey = 'incomes';
+import { Action } from '@ngrx/store'
+import { IncomesModule } from '../../incomes/incomes.module'
+import * as IncomelActions from '../actions/incomes.actions'
 
-export interface State {
-  incomes:Income[]
+// Section 1
+const initialState: IncomesModule = {
+    id: 0,
+    title: "Some Income",
+    amount: 11000,
+    payDay: 3,
+    methodsofPayment: 4
 }
 
-export const initialState: State = {
-  incomes: [{
-    id: 0,
-    title: "",
-    amount: 0,
-    payDay: 1,
-    methodsofPayment: 1
-  }]
-};
+// Section 2
+export function reducer(state: IncomesModule[] = [initialState], action: IncomelActions.Actions) {
 
-
-export const reducer = createReducer(
-  initialState,
-  on(setIncomes, (state: State, action) => ({ ...state, incomes: action.incomes }))
-);
+    // Section 3
+    switch(action.type) {
+        case IncomelActions.ADD_INCOME:
+            return [...state, action.payload];
+        default:
+            return state;
+    }
+}
