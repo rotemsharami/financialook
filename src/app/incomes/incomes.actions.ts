@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import Income from './incomes.model';
 
-export const GetToDoAction = createAction('[ToDo] - Get Income');
+export const GetToDoAction = createAction('[Income] - Get Income');
 
 export const CreateToDoAction = createAction(
   '[Income] - Create Income',

@@ -55,7 +55,7 @@ import { environment } from 'src/environments/environment';
       {path: "Income", component: IncomeComponent},
       {path: "Expences", component: ExpencesComponent}
     ]),
-    StoreModule.forRoot({ todos: incomeReducer }),
+    StoreModule.forRoot({ incomes: incomeReducer }),
     EffectsModule.forRoot([incomeEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],

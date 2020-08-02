@@ -6,8 +6,8 @@
 <div class="row">
     <table>
         <tbody>
-            <tr>
-                <td></td>
+            <tr *ngFor="let item of ToDoList">
+                <td>{{item.amount}}</td>
             </tr>
         </tbody>
     </table>

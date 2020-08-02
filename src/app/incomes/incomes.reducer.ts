@@ -1,15 +1,15 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ToDoActions from './incomes.actions';
 import Income  from './incomes.model';
-import ToDoState, { initializeState } from './todo.state';
+import ToDoState, { initializeState } from './incomes.state';
 
 const initialState = initializeState();
 
 const reducer = createReducer(
   initialState,
   on(ToDoActions.GetToDoAction, state => state),
-  on(ToDoActions.CreateToDoAction, (state: ToDoState, todo: Income) => {
-    return { ...state, incomes: [...state.incomes, todo], ToDoError: null };
+  on(ToDoActions.CreateToDoAction, (state: ToDoState, income: Income) => {
+    return { ...state, incomes: [...state.incomes, income], ToDoError: null };
   }),
 
   on(ToDoActions.SuccessGetToDoAction, (state: ToDoState, { payload }) => {

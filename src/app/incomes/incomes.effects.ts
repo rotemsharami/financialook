@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ToDoActions from './incomes.actions';
 import { ToDoHttpService } from './incomes.httpservice';
-import ToDo from './incomes.model';
+import Income from './incomes.model';
 
 @Injectable()
 export class incomeEffects {
@@ -15,7 +15,7 @@ export class incomeEffects {
       ofType(ToDoActions.BeginGetToDoAction),
       mergeMap(action =>
         this.todoService.getToDos().pipe(
-          map((data: ToDo[]) => {
+          map((data: Income[]) => {
             return ToDoActions.SuccessGetToDoAction({ payload: data });
           }),
           catchError((error: Error) => {
@@ -31,7 +31,7 @@ export class incomeEffects {
       ofType(ToDoActions.BeginCreateToDoAction),
       mergeMap(action =>
         this.todoService.createToDos(action.payload).pipe(
-          map((data: ToDo) => {
+          map((data: Income) => {
             return ToDoActions.SuccessCreateToDoAction({ payload: data });
           }),
           catchError((error: Error) => {

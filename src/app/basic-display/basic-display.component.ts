@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as ToDoActions from '../incomes/incomes.actions';
 import Income  from '../incomes/incomes.model'
-import ToDoState, { initializeState } from '../incomes/todo.state';
+import ToDoState, { initializeState } from '../incomes/incomes.state';
 
 @Component({
   selector: 'app-basic-display',
@@ -13,8 +13,8 @@ import ToDoState, { initializeState } from '../incomes/todo.state';
 })
 export class BasicDisplayComponent implements OnInit {
 
-  constructor(private store: Store<{ todos: ToDoState }>) {
-    this.todo$ = store.pipe(select('todos'));
+  constructor(private store: Store<{ incomes: ToDoState }>) {
+    this.todo$ = store.pipe(select('incomes'));
   }
 
   ngOnInit() {
