@@ -8,8 +8,12 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as incomesActions from './incomes/incomes.actions';
-import Income  from './incomes/incomes.model'
+import Income from './incomes/incomes.model'
+import Incomes from './incomes/incomes-items.model'
 import incomesState, { initializeState } from './incomes/incomes.state';
+
+
+//[ { "id": 0, "title": "FFF", "amount": "11000", "PayDay": "10", "methodsofPayment": "1" }, { "id": 1, "title": "HHH", "amount": "2500", "PayDay": "15", "methodsofPayment": "3" } ]
 
 @Component({
     selector: 'Income',
@@ -46,24 +50,14 @@ export class IncomeComponent implements OnInit{
 		this.IncomeFormObj.removeAt(i)
 	}
 	ngOnInit(){
-
-		
-		
-
-
 		this.ToDoSubscription = this.todo$
 		.pipe(
 			map(x => {
 				this.incomesList = x.incomes;
 				this.todoError = x.ToDoError;
-				
-				
 				this.incomeForm = new FormGroup({
 					incomes: this.fb.array([])
 				});
-
-				
-
 				this.incomesList.forEach((obj, index) => {
 					const item = this.fb.group({
 						title: obj.title,
@@ -75,12 +69,14 @@ export class IncomeComponent implements OnInit{
 				});
 
 
-
-
-
-
-
-
+				this.incomeForm.valueChanges.subscribe(val => {
+					// this.metadataService.updateDataSource({type: "income", data: this.incomeForm.value});
+					//this.metadataService.updateData({type: "income", data: this.incomeForm.value});
+					//console.log( this.incomeForm.value);
+					//this.fLdata.income = this.incomeForm.value;
+					console.log("ddd");
+					this.createToDo();
+				});
 
 
 			})
@@ -90,18 +86,13 @@ export class IncomeComponent implements OnInit{
 
 		
 
-		this.fLdata = this.metadataService.getData();
-		
+		//this.fLdata = this.metadataService.getData();
 		//if(this.fLdata.income != undefined){
 			// this.incomeForm = new FormGroup({
 			// 	incomes: this.fb.array([])
 			// });
 			//if(this.fLdata.income != undefined){
 				//if(this.fLdata.income.incomes.length > 0){
-					
-
-
-
 					// this.fLdata.income.incomes.forEach((obj, index) => {
 					// 	const item = this.fb.group({
 					// 		title: obj.title,
@@ -111,9 +102,6 @@ export class IncomeComponent implements OnInit{
 					// 	})
 					// 	this.IncomeFormObj.push(item);
 					// });
-
-
-
 				//}
 			//}
 		// }else{
@@ -121,13 +109,18 @@ export class IncomeComponent implements OnInit{
 		// 		incomes: this.fb.array([])
 		// 	});
 		// }
-		this.incomeForm.valueChanges.subscribe(val => {
-			// this.metadataService.updateDataSource({type: "income", data: this.incomeForm.value});
-			//this.metadataService.updateData({type: "income", data: this.incomeForm.value});
-			//console.log( this.incomeForm.value);
-			//this.fLdata.income = this.incomeForm.value;
-		});
+
+
 	}
+
+	createToDo() {
+		const json_v = [ {"title": "Job", "amount": "11000", "PayDay": "10", "methodsofPayment": "1" }, {"title": "Realestate", "amount": "2500", "PayDay": "15", "methodsofPayment": "3" }];
+		const incomes: any = json_v;
+		this.store.dispatch(incomesActions.NewUpdateToDoAction({ payload: incomes }));
+
+		
+	}
+
 
 	todo$: Observable<incomesState>;
 	ToDoSubscription: Subscription;

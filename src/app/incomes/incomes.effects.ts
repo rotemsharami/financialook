@@ -41,4 +41,22 @@ export class incomeEffects {
       )
     )
   );
+
+  newCreateToDos$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(ToDoActions.NewUpdateToDoAction),
+      mergeMap(action =>
+        this.todoService.newCreateToDos(action.payload).pipe(
+          map((data: any) => {
+            console.log(data);
+            return ToDoActions.newSuccessCreateToDoAction({ payload: data });
+          }),
+          catchError((error: Error) => {
+            return of(ToDoActions.ErrorToDoAction(error));
+          })
+        )
+      )
+    )
+  );
+
 }
