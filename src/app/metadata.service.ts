@@ -10,14 +10,9 @@ import { Observable, Subject, BehaviorSubject } from "rxjs"
 export class MetadataService {
 	private cookieValue: String;
 	public data = new BehaviorSubject<any>({});
-
 	private incomsCounter = new BehaviorSubject<number>(0);
-	expensesCounter: number = 0;
-	profit: number = 0;
-
-
-
-
+	private expensesCounter = new BehaviorSubject<number>(0);
+	private profit = new BehaviorSubject<number>(0);
 	cast = this.data.asObservable();
 	castIncomsCounter = this.incomsCounter.asObservable();
 	editUser(newUser: any){
