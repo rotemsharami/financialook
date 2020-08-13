@@ -9,8 +9,17 @@ import { Observable, Subject, BehaviorSubject } from "rxjs"
 })
 export class MetadataService {
 	private cookieValue: String;
-	private data = new BehaviorSubject<any>({});
+	public data = new BehaviorSubject<any>({});
+
+	private incomsCounter = new BehaviorSubject<number>(0);
+	expensesCounter: number = 0;
+	profit: number = 0;
+
+
+
+
 	cast = this.data.asObservable();
+	castIncomsCounter = this.incomsCounter.asObservable();
 	editUser(newUser: any){
 		this.data.next(newUser);
 	}
@@ -18,6 +27,7 @@ export class MetadataService {
 		if(this.cookieServic.check("FL")){
 			this.data.next(JSON.parse(this.cookieServic.get("FL")));
 		}
+		this.updateCounters();
 	}
 	getDayOfMonth(): DayOfMonth[] {
 		const data = [];
@@ -45,5 +55,23 @@ export class MetadataService {
 		dataFromCookie[Object.keys(data)[0]] = data[Object.keys(data)[0]];
 		this.data.next(dataFromCookie);
 		this.cookieServic.set("FL", JSON.stringify(dataFromCookie));
+
 	}
+
+	updateCounters(){
+		let sum = 0;
+		this.data._value.incomes.forEach((item, index) => {
+			let amount = parseInt(item.amount);
+			if(!isNaN(amount)){
+				sum += parseInt(item.amount);
+			}
+		});
+		this.incomsCounter.next(sum);
+		// this.data._value.expences.forEach((item, index) => {
+		// 	this.expensesCounter +=  parseInt(item.amount);
+		// });
+		// this.profit = this.incomsCounter - this.expensesCounter;
+
+	}
+
 }

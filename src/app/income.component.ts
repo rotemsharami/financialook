@@ -62,6 +62,7 @@ export class IncomeComponent implements OnInit{
 		}
 		this.incomeForm.valueChanges.subscribe(val => {
 			this.metadataService.updataUser(this.incomeForm.value);
+			this.metadataService.updateCounters();
 		});
 	}
 	get IncomeFormObj(){

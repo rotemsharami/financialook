@@ -11,19 +11,16 @@ import { MetadataService } from '../metadata.service';
 })
 export class BasicDisplayComponent implements OnInit {
 	data:any;
-	subscription: Subscription;
-	incomsCounter: number = 0;
-	expensesCounter: number = 0;
-	profit: number = 0;
-	constructor(private usersService:MetadataService) {}
+	incomsCounter: number;
+	expensesCounter: number;
+	profit: number;
+	constructor(private usersService:MetadataService) {
+		
+
+		
+	}
 	ngOnInit() {
 		this.usersService.cast.subscribe(data => this.data = data);
-		this.data.incomes.forEach((item, index) => {
-			this.incomsCounter +=  parseInt(item.amount);
-		});
-		this.data.expences.forEach((item, index) => {
-			this.expensesCounter +=  parseInt(item.amount);
-		});
-		this.profit = this.incomsCounter - this.expensesCounter;
+		this.usersService.castIncomsCounter.subscribe(incomsCounter => this.incomsCounter = incomsCounter);
 	}
 }
