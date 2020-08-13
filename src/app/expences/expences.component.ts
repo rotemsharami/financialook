@@ -9,57 +9,60 @@ import { MetadataService } from '../metadata.service';
   styleUrls: ['./expences.component.scss']
 })
 export class ExpencesComponent implements OnInit {
+	data:any;
+	newData:any;
 	expencesForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
 	methodsofPaymentItems: MethodsofPayment[];
-	  constructor(
-		  private metadataService: MetadataService,
-		  private fb: FormBuilder
-		){
+	constructor(
+		private metadataService: MetadataService,
+		private fb: FormBuilder){
 		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
 		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
 	}
-	addOtherExpences(){
+	addExpense(){
 		const item = this.fb.group({
 			title: "",
 			amount:"",
 			payDay: "",
 			methodsofPayment: ""
 		})
-		this.otherExpencesForm.push(item);
+		this.expencesFormObj.push(item);
 	}
-	removeOtherExpence(i){
-		this.otherExpencesForm.removeAt(i)
+	removeExpense(i){
+		this.expencesFormObj.removeAt(i)
 	}
 	ngOnInit(){
-		//const data = this.metadataService.getData();
-		// if(data.expences != undefined){
-		// 	this.expencesForm = new FormGroup({
-		// 		otherExpences: this.fb.array([])
-		// 	});
-		// 	if(data.expences != undefined){
-		// 		if(data.expences.otherExpences.length > 0){
-		// 			data.expences.otherExpences.forEach((obj, index) => {
-		// 				const item = this.fb.group({
-		// 					title: obj.title,
-		// 					amount: obj.amount,
-		// 					payDay: obj.payDay,
-		// 					methodsofPayment: obj.methodsofPayment
-		// 				})
-		// 				this.otherExpencesForm.push(item);
-		// 			});
-		// 		}
-		// 	}
-		// }else{
-		// 	this.expencesForm = new FormGroup({
-		// 		otherExpences: this.fb.array([])
-		// 	});
-		// }
+		this.metadataService.cast.subscribe(user=> this.data = user);
+		if(this.data != undefined){
+			if(this.data.incomes != undefined){
+				this.expencesForm = new FormGroup({
+					expences: this.fb.array([])
+				});
+				if(this.data.expences != undefined){
+					if(this.data.expences.length > 0){
+						this.data.expences.forEach((obj, index) => {
+							const item = this.fb.group({
+								title: obj.title,
+								amount: obj.amount,
+								payDay: obj.payDay,
+								methodsofPayment: obj.methodsofPayment
+							})
+							this.expencesFormObj.push(item);
+						});
+					}
+				}
+			}
+		}else{
+			this.expencesForm = new FormGroup({
+				expences: this.fb.array([])
+			});
+		}
 		this.expencesForm.valueChanges.subscribe(val => {
-			//this.metadataService.updateData({type: "expences", data: this.expencesForm.value});
+			this.metadataService.updataUser(this.expencesForm.value);
 		});
 	}
-	get otherExpencesForm(){
-		return this.expencesForm.get("otherExpences") as FormArray
+	get expencesFormObj(){
+		return this.expencesForm.get("expences") as FormArray
 	}
 }

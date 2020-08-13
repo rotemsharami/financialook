@@ -3,10 +3,23 @@
     <h2>Overview</h2>
 </div>
 <div class="row">
+    <!-- <table>
+        <tbody>
+            <tr *ngFor="let item of data.incomes">
+                <td>{{item.amount}}</td>
+            </tr>
+        </tbody>
+    </table> -->
     <table>
         <tbody>
-            <tr *ngFor="let item of user.incomes">
-                <td>{{item.amount}}</td>
+            <tr>
+                <td>Incomes:</td><td>₪{{incomsCounter}}</td>
+            </tr>
+            <tr>
+                <td>Expenses:</td><td>₪{{expensesCounter}}</td>
+            </tr>
+            <tr>
+                <td>Profit:</td><td>₪{{profit}}</td>
             </tr>
         </tbody>
     </table>
