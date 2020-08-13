@@ -32,31 +32,31 @@ export class ExpencesComponent implements OnInit {
 		this.otherExpencesForm.removeAt(i)
 	}
 	ngOnInit(){
-		const data = this.metadataService.getData();
-		if(data.expences != undefined){
-			this.expencesForm = new FormGroup({
-				otherExpences: this.fb.array([])
-			});
-			if(data.expences != undefined){
-				if(data.expences.otherExpences.length > 0){
-					data.expences.otherExpences.forEach((obj, index) => {
-						const item = this.fb.group({
-							title: obj.title,
-							amount: obj.amount,
-							payDay: obj.payDay,
-							methodsofPayment: obj.methodsofPayment
-						})
-						this.otherExpencesForm.push(item);
-					});
-				}
-			}
-		}else{
-			this.expencesForm = new FormGroup({
-				otherExpences: this.fb.array([])
-			});
-		}
+		//const data = this.metadataService.getData();
+		// if(data.expences != undefined){
+		// 	this.expencesForm = new FormGroup({
+		// 		otherExpences: this.fb.array([])
+		// 	});
+		// 	if(data.expences != undefined){
+		// 		if(data.expences.otherExpences.length > 0){
+		// 			data.expences.otherExpences.forEach((obj, index) => {
+		// 				const item = this.fb.group({
+		// 					title: obj.title,
+		// 					amount: obj.amount,
+		// 					payDay: obj.payDay,
+		// 					methodsofPayment: obj.methodsofPayment
+		// 				})
+		// 				this.otherExpencesForm.push(item);
+		// 			});
+		// 		}
+		// 	}
+		// }else{
+		// 	this.expencesForm = new FormGroup({
+		// 		otherExpences: this.fb.array([])
+		// 	});
+		// }
 		this.expencesForm.valueChanges.subscribe(val => {
-			this.metadataService.updateData({type: "expences", data: this.expencesForm.value});
+			//this.metadataService.updateData({type: "expences", data: this.expencesForm.value});
 		});
 	}
 	get otherExpencesForm(){
