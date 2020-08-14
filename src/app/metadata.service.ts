@@ -15,6 +15,8 @@ export class MetadataService {
 	private profit = new BehaviorSubject<number>(0);
 	cast = this.data.asObservable();
 	castIncomsCounter = this.incomsCounter.asObservable();
+	castexpensesCounter = this.expensesCounter.asObservable();
+	castProfit = this.profit.asObservable();
 	editUser(newUser: any){
 		this.data.next(newUser);
 	}
@@ -55,17 +57,25 @@ export class MetadataService {
 
 	updateCounters(){
 		let sum = 0;
-		this.data._value.incomes.forEach((item, index) => {
+		this.data.value.incomes.forEach((item, index) => {
 			let amount = parseInt(item.amount);
 			if(!isNaN(amount)){
 				sum += parseInt(item.amount);
 			}
 		});
 		this.incomsCounter.next(sum);
-		// this.data._value.expences.forEach((item, index) => {
-		// 	this.expensesCounter +=  parseInt(item.amount);
-		// });
-		// this.profit = this.incomsCounter - this.expensesCounter;
+		sum = 0;
+		this.data.value.expences.forEach((item, index) => {
+			let amount = parseInt(item.amount);
+			if(!isNaN(amount)){
+				sum += parseInt(item.amount);
+			}
+		});
+		this.expensesCounter.next(sum);
+		this.profit.next(this.incomsCounter.value - this.expensesCounter.value);
+
+
+		
 
 	}
 

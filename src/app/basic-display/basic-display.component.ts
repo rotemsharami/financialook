@@ -10,7 +10,7 @@ import { MetadataService } from '../metadata.service';
 	styleUrls: ['./basic-display.component.scss']
 })
 export class BasicDisplayComponent implements OnInit {
-	data:any;
+	data: any;
 	incomsCounter: number;
 	expensesCounter: number;
 	profit: number;
@@ -22,5 +22,7 @@ export class BasicDisplayComponent implements OnInit {
 	ngOnInit() {
 		this.usersService.cast.subscribe(data => this.data = data);
 		this.usersService.castIncomsCounter.subscribe(incomsCounter => this.incomsCounter = incomsCounter);
+		this.usersService.castexpensesCounter.subscribe(expensesCounter => this.expensesCounter = expensesCounter);
+		this.usersService.castProfit.subscribe(profit => this.profit = profit);
 	}
 }

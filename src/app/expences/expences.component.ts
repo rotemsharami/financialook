@@ -60,6 +60,7 @@ export class ExpencesComponent implements OnInit {
 		}
 		this.expencesForm.valueChanges.subscribe(val => {
 			this.metadataService.updataUser(this.expencesForm.value);
+			this.metadataService.updateCounters();
 		});
 	}
 	get expencesFormObj(){

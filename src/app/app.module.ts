@@ -53,7 +53,8 @@ import { environment } from 'src/environments/environment';
     RouterModule.forRoot([
       {path: "Home", component: HomeComponent},
       {path: "Income", component: IncomeComponent},
-      {path: "Expences", component: ExpencesComponent}
+      {path: "Expences", component: ExpencesComponent},
+      
     ]),
     StoreModule.forRoot({ incomes: incomeReducer }),
     EffectsModule.forRoot([incomeEffects]),
