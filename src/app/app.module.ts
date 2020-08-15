@@ -27,6 +27,7 @@ import { incomeEffects } from "./incomes/incomes.effects"
 import  {incomeReducer} from "./incomes/incomes.reducer"
 import { environment } from 'src/environments/environment';
 import { BankStatusComponent } from './bank-status/bank-status.component';
+import { OccasionalExpensesComponent } from './occasional-expenses/occasional-expenses.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { BankStatusComponent } from './bank-status/bank-status.component';
     ExpencesComponent,
     BasicDisplayComponent,
     BankStatusComponent,
+    OccasionalExpensesComponent,
   ],
   imports: [
     HttpClientModule,
@@ -56,7 +58,8 @@ import { BankStatusComponent } from './bank-status/bank-status.component';
       {path: "Home", component: HomeComponent},
       {path: "Income", component: IncomeComponent},
       {path: "Expences", component: ExpencesComponent},
-      {path: "BankStatus", component: BankStatusComponent}
+      {path: "BankStatus", component: BankStatusComponent},
+      {path: "OccasionalExpenses", component: OccasionalExpensesComponent}
     ]),
     StoreModule.forRoot({ incomes: incomeReducer }),
     EffectsModule.forRoot([incomeEffects]),

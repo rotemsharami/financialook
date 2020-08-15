@@ -1,0 +1,35 @@
+<div class="section col-12">
+    <form [formGroup]="expencesForm">
+        <br>
+        <div class="basicExpences row">
+            <h2>Occasional Expenses</h2>
+        </div>
+        <div formArrayName="expences">
+            <div class="form_line row" *ngFor="let item of expencesFormObj.controls; let i=index;" [formGroupName]="i">
+                <mat-form-field>
+                    <input matInput placeholder="Title" formControlName="title">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Amount" formControlName="amount">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
+                        <mat-option *ngFor="let item of methodsofPaymentItems; let i=index;" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Pay Day" formControlName="payDay">
+                        <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="day.id">{{day.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-icon-button aria-label="Remove" (click)="removeExpense(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+            </div>
+        </div>
+        <div class="addOtherExpencesButton row">
+            <button mat-raised-button color="primary" (click)="addExpense()">Add</button>
+        </div>
+        <br>
+    </form>
+</div>
