@@ -22,6 +22,7 @@ export class MetadataService {
 	}
 	constructor(private cookieServic: CookieService) {
 		if(this.cookieServic.check("FL")){
+			console.log(JSON.parse(this.cookieServic.get("FL")));
 			this.data.next(JSON.parse(this.cookieServic.get("FL")));
 		}
 		this.updateCounters();

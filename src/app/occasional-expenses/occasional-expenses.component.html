@@ -1,11 +1,11 @@
 <div class="section col-12">
-    <form [formGroup]="expencesForm">
+    <form [formGroup]="occasionalExpencesForm">
         <br>
         <div class="basicExpences row">
             <h2>Occasional Expenses</h2>
         </div>
-        <div formArrayName="expences">
-            <div class="form_line row" *ngFor="let item of expencesFormObj.controls; let i=index;" [formGroupName]="i">
+        <div formArrayName="occasionalExpences">
+            <div class="form_line row" *ngFor="let item of occasionalExpencesFormObj.controls; let i=index;" [formGroupName]="i">
                 <mat-form-field>
                     <input matInput placeholder="Title" formControlName="title">
                 </mat-form-field>

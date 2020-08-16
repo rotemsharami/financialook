@@ -12,7 +12,7 @@ import { MetadataService } from '../metadata.service';
 export class OccasionalExpensesComponent implements OnInit {
 	data:any;
 	newData:any;
-	expencesForm: FormGroup;
+	occasionalExpencesForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
 	methodsofPaymentItems: MethodsofPayment[];
 	constructor(
@@ -28,44 +28,64 @@ export class OccasionalExpensesComponent implements OnInit {
 			payDay: "",
 			methodsofPayment: ""
 		})
-		this.expencesFormObj.push(item);
+		this.occasionalExpencesFormObj.push(item);
 	}
 	removeExpense(i){
-		this.expencesFormObj.removeAt(i)
+		this.occasionalExpencesFormObj.removeAt(i)
 	}
 	ngOnInit(){
 		this.metadataService.cast.subscribe(user=> this.data = user);
 		if(this.data != undefined){
 			if(this.data.incomes != undefined){
-				this.expencesForm = new FormGroup({
-					expences: this.fb.array([])
+				this.occasionalExpencesForm = new FormGroup({
+					occasionalExpences: this.fb.array([])
 				});
-				if(this.data.expences != undefined){
-					if(this.data.expences.length > 0){
-						this.data.expences.forEach((obj, index) => {
+				if(this.data.occasionalExpences != undefined){
+					if(this.data.occasionalExpences.length > 0){
+						this.data.occasionalExpences.forEach((obj, index) => {
 							const item = this.fb.group({
 								title: obj.title,
 								amount: obj.amount,
 								payDay: obj.payDay,
 								methodsofPayment: obj.methodsofPayment
 							})
-							this.expencesFormObj.push(item);
+							this.occasionalExpencesFormObj.push(item);
 						});
 					}
 				}
 			}
 		}else{
-			this.expencesForm = new FormGroup({
-				expences: this.fb.array([])
+			this.occasionalExpencesForm = new FormGroup({
+				occasionalExpences: this.fb.array([])
 			});
 		}
-		this.expencesForm.valueChanges.subscribe(val => {
-			this.metadataService.updataUser(this.expencesForm.value);
+		
+		this.occasionalExpencesForm.valueChanges.subscribe(val => {
+
+			
+
+			this.occasionalExpencesForm.value[Object.keys(this.occasionalExpencesForm.value)[0]].forEach((object, index) => {
+				//console.log(object);
+				//delete object.payDay;
+				
+				//this.occasionalExpencesForm.removeControl("payDay");
+
+					this.occasionalExpencesForm.controls.occasionalExpences.value.forEach((o: FormControl, i) => {
+						o.disabled;
+					});
+
+
+
+			});
+
+
+
+			this.metadataService.updataUser(this.occasionalExpencesForm.value);
 			this.metadataService.updateCounters();
 		});
 	}
-	get expencesFormObj(){
-		return this.expencesForm.get("expences") as FormArray
+	get occasionalExpencesFormObj(){
+		return this.occasionalExpencesForm.get("occasionalExpences") as FormArray
 	}
 
 }
