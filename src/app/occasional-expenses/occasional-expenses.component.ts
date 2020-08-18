@@ -32,7 +32,20 @@ export class OccasionalExpensesComponent implements OnInit {
 	}
 	removeExpense(i){
 		this.occasionalExpencesFormObj.removeAt(i)
-	}
+  }
+  
+  whatsThis(object){
+    console.log(object);
+  }
+
+  getValue(mtop, id){
+    if(mtop == "1"){
+      return "";
+    }else{
+      return id;
+    }
+  }
+
 	ngOnInit(){
 		this.metadataService.cast.subscribe(user=> this.data = user);
 		if(this.data != undefined){
@@ -61,25 +74,6 @@ export class OccasionalExpensesComponent implements OnInit {
 		}
 		
 		this.occasionalExpencesForm.valueChanges.subscribe(val => {
-
-			
-
-			this.occasionalExpencesForm.value[Object.keys(this.occasionalExpencesForm.value)[0]].forEach((object, index) => {
-				//console.log(object);
-				//delete object.payDay;
-				
-				//this.occasionalExpencesForm.removeControl("payDay");
-
-					this.occasionalExpencesForm.controls.occasionalExpences.value.forEach((o: FormControl, i) => {
-						o.disabled;
-					});
-
-
-
-			});
-
-
-
 			this.metadataService.updataUser(this.occasionalExpencesForm.value);
 			this.metadataService.updateCounters();
 		});
