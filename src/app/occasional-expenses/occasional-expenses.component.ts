@@ -14,12 +14,16 @@ export class OccasionalExpensesComponent implements OnInit {
 	newData:any;
 	occasionalExpencesForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
+	months: DayOfMonth[];
+	years: DayOfMonth[];
 	methodsofPaymentItems: MethodsofPayment[];
 	constructor(
 		private metadataService: MetadataService,
 		private fb: FormBuilder){
 		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
 		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
+		this.months = this.metadataService.getMonths();
+		this.years = this.metadataService.getYears();
 	}
 
 	paymentsChange(i){
@@ -34,7 +38,9 @@ export class OccasionalExpensesComponent implements OnInit {
 			payDay: "",
 			methodsofPayment: "",
 			payments:"",
-			monthlyPayment: ""
+			monthlyPayment: "",
+			startingMonth: "",
+			startingYear: ""
 		})
 		this.occasionalExpencesFormObj.push(item);
 	}
@@ -71,6 +77,8 @@ export class OccasionalExpensesComponent implements OnInit {
 								methodsofPayment: obj.methodsofPayment,
 								payments: obj.payments,
 								monthlyPayment: obj.monthlyPayment,
+								startingMonth: obj.startingMonth,
+								startingYear: obj.startingYear
 							})
 							this.occasionalExpencesFormObj.push(item);
 						});
