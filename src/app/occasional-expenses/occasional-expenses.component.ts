@@ -23,14 +23,8 @@ export class OccasionalExpensesComponent implements OnInit {
 	}
 
 	paymentsChange(i){
-
-		
-		
-
-		this.occasionalExpencesFormObj.controls[0].controls.monthlyPayment.setValue(Math.round(
-			parseInt(this.occasionalExpencesFormObj.controls[0].controls.amount.value)/parseInt(this.occasionalExpencesFormObj.controls[0].controls.payments.value)
-		)
-		);
+		this.occasionalExpencesFormObj.controls[i].controls.monthlyPayment.setValue(Math.round(parseInt(this.occasionalExpencesFormObj.controls[i].controls.amount.value)/parseInt(this.occasionalExpencesFormObj.controls[i].controls.payments.value)));
+		console.log(this.occasionalExpencesFormObj.controls);
 	}
 
 	addExpense(){
