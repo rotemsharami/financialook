@@ -32,15 +32,6 @@ export class BankStatusComponent implements OnInit {
 		this.transactions.forEach((item, index) => {
 			sum -= parseInt(item.amount);
 			item.status = sum;
-
-
 		});
-
-
-
-		console.log(this.transactions);
-
-
-		
 	}
 }

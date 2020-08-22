@@ -6,13 +6,13 @@
         </div>
         <div formArrayName="occasionalExpences">
             <div class="form_line row" *ngFor="let item of occasionalExpencesFormObj.controls; let i=index;" [formGroupName]="i">
-                <mat-form-field>
+                <mat-form-field class="col">
                     <input matInput placeholder="Title" formControlName="title">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field class="col">
                     <input matInput placeholder="Amount" formControlName="amount">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field class="col">
                     <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
                         <mat-option *ngFor="let item of methodsofPaymentItems; let i=index;" [value]="item.id">{{item.name}}</mat-option>
                     </mat-select>
@@ -21,6 +21,14 @@
                     <mat-select placeholder="Pay Day" formControlName="payDay">
                         <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="getValue(item.controls.methodsofPayment.value, day.id)">{{day.name}}</mat-option>
                     </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="(item.controls.methodsofPayment.value == '1')">
+                    <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange(i)">
+                        <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="(item.controls.methodsofPayment.value == '1')">
+                    <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
                 </mat-form-field>
                 <button mat-icon-button aria-label="Remove" (click)="removeExpense(i)">
                     <mat-icon>delete</mat-icon>

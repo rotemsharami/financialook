@@ -21,12 +21,26 @@ export class OccasionalExpensesComponent implements OnInit {
 		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
 		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
 	}
+
+	paymentsChange(i){
+
+		
+		
+
+		this.occasionalExpencesFormObj.controls[0].controls.monthlyPayment.setValue(Math.round(
+			parseInt(this.occasionalExpencesFormObj.controls[0].controls.amount.value)/parseInt(this.occasionalExpencesFormObj.controls[0].controls.payments.value)
+		)
+		);
+	}
+
 	addExpense(){
 		const item = this.fb.group({
 			title: "",
 			amount:"",
 			payDay: "",
-			methodsofPayment: ""
+			methodsofPayment: "",
+			payments:"",
+			monthlyPayment: ""
 		})
 		this.occasionalExpencesFormObj.push(item);
 	}
@@ -60,7 +74,9 @@ export class OccasionalExpensesComponent implements OnInit {
 								title: obj.title,
 								amount: obj.amount,
 								payDay: obj.payDay,
-								methodsofPayment: obj.methodsofPayment
+								methodsofPayment: obj.methodsofPayment,
+								payments: obj.payments,
+								monthlyPayment: obj.monthlyPayment,
 							})
 							this.occasionalExpencesFormObj.push(item);
 						});
