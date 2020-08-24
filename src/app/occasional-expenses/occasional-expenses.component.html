@@ -23,11 +23,12 @@
                     </mat-select>
                 </mat-form-field> -->
 
-                <mat-form-field>
-                    <input matInput [matdatepicker]="myDatepicker" formControlName="payDay">
-                    <mat-datepicker-toggle [for]="myDatepicker" matSuffix></mat-datepicker-toggle>
-                    <mat-datepicker #myDatepicker></mat-datepicker>
-                </mat-form-field>
+                <mat-form-field class="example-full-width col" appearance="fill" *ngIf="(item.controls.methodsofPayment.value != '1')">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="payDay">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                  </mat-form-field>
 
 
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
@@ -35,6 +36,7 @@
                         <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
                 </mat-form-field>

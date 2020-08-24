@@ -30,8 +30,7 @@ import { environment } from 'src/environments/environment';
 import { BankStatusComponent } from './bank-status/bank-status.component';
 import { OccasionalExpensesComponent } from './occasional-expenses/occasional-expenses.component';
 import { CreditCardComponent } from './credit-card/credit-card.component';
-import { MatNativeDateModule } from '@angular/material/core';
-
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -60,6 +59,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
     AppRoutingModule,
+    MatRippleModule,
     RouterModule.forRoot([
       {path: "Home", component: HomeComponent},
       {path: "Income", component: IncomeComponent},

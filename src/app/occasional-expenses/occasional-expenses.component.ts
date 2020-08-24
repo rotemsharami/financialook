@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
 import { MethodsofPayment } from '../interfaces/BasicInterfaceses';
 import { MetadataService } from '../metadata.service';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-occasional-expenses',
@@ -10,6 +11,12 @@ import { MetadataService } from '../metadata.service';
   styleUrls: ['./occasional-expenses.component.scss']
 })
 export class OccasionalExpensesComponent implements OnInit {
+	dateClass = (d: Date): MatCalendarCellCssClasses => {
+		const date = d.getDate();
+		return (date === 1 || date === 20) ? 'example-custom-date-class' : '';
+	  }
+
+
 	data:any;
 	newData:any;
 	occasionalExpencesForm: FormGroup;
