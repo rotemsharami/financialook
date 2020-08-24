@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MetadataService } from '../metadata.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-credit-card',
   templateUrl: './credit-card.component.html',
@@ -13,6 +14,10 @@ export class CreditCardComponent implements OnInit {
   }
 
 	ngOnInit(): void {
+		let now = moment();
+
+		console.log(now);
+
 		this.dataService.cast.subscribe(data => this.data = data);
 		Object.keys(this.data).forEach((index) => {
 			console.log(index);
