@@ -28,7 +28,7 @@ export class OccasionalExpensesComponent implements OnInit {
 
 	paymentsChange(i){
 		this.occasionalExpencesFormObj.controls[i].controls.monthlyPayment.setValue(Math.round(parseInt(this.occasionalExpencesFormObj.controls[i].controls.amount.value)/parseInt(this.occasionalExpencesFormObj.controls[i].controls.payments.value)));
-		console.log(this.occasionalExpencesFormObj.controls);
+		//console.log(this.occasionalExpencesFormObj.controls);
 	}
 
 	addExpense(){
@@ -84,17 +84,20 @@ export class OccasionalExpensesComponent implements OnInit {
 						});
 					}
 				}
+			}else{
+				this.occasionalExpencesForm = new FormGroup({
+					occasionalExpences: this.fb.array([])
+				});
 			}
-		}else{
-			this.occasionalExpencesForm = new FormGroup({
-				occasionalExpences: this.fb.array([])
-			});
 		}
 		
-		this.occasionalExpencesForm.valueChanges.subscribe(val => {
-			this.metadataService.updataUser(this.occasionalExpencesForm.value);
-			this.metadataService.updateCounters();
-		});
+
+			
+			this.occasionalExpencesForm.valueChanges.subscribe(val => {
+				this.metadataService.updataUser(this.occasionalExpencesForm.value);
+				this.metadataService.updateCounters();
+			});
+		
 	}
 	get occasionalExpencesFormObj(){
 		return this.occasionalExpencesForm.get("occasionalExpences") as FormArray

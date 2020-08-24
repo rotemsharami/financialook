@@ -14,6 +14,7 @@ import {MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule } from '@angular/material/checkbox';
 import {MatChipsModule } from '@angular/material/chips';
 import {MatIconModule } from '@angular/material/icon';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { CookieService } from "ngx-cookie-service";
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -29,6 +30,7 @@ import { environment } from 'src/environments/environment';
 import { BankStatusComponent } from './bank-status/bank-status.component';
 import { OccasionalExpensesComponent } from './occasional-expenses/occasional-expenses.component';
 import { CreditCardComponent } from './credit-card/credit-card.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -55,6 +57,8 @@ import { CreditCardComponent } from './credit-card/credit-card.component';
     MatCheckboxModule,
     MatChipsModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     AppRoutingModule,
     RouterModule.forRoot([
       {path: "Home", component: HomeComponent},

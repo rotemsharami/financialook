@@ -78,26 +78,25 @@ export class MetadataService {
 
 	updateCounters(){
 		let sum = 0;
-		this.data.value.incomes.forEach((item, index) => {
-			let amount = parseInt(item.amount);
-			if(!isNaN(amount)){
-				sum += parseInt(item.amount);
+		if(this.data.value.incomes != undefined){
+			this.data.value.incomes.forEach((item, index) => {
+				let amount = parseInt(item.amount);
+				if(!isNaN(amount)){
+					sum += parseInt(item.amount);
+				}
+			});
+			this.incomsCounter.next(sum);
+			sum = 0;
+			if(this.data.value.expences != undefined){
+				this.data.value.expences.forEach((item, index) => {
+					let amount = parseInt(item.amount);
+					if(!isNaN(amount)){
+						sum += parseInt(item.amount);
+					}
+				});
 			}
-		});
-		this.incomsCounter.next(sum);
-		sum = 0;
-		this.data.value.expences.forEach((item, index) => {
-			let amount = parseInt(item.amount);
-			if(!isNaN(amount)){
-				sum += parseInt(item.amount);
-			}
-		});
-		this.expensesCounter.next(sum);
-		this.profit.next(this.incomsCounter.value - this.expensesCounter.value);
-
-
-		
-
+			this.expensesCounter.next(sum);
+			this.profit.next(this.incomsCounter.value - this.expensesCounter.value);
+		}
 	}
-
 }
