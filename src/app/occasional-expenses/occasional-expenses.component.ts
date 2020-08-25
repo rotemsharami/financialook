@@ -3,18 +3,16 @@ import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
 import { MethodsofPayment } from '../interfaces/BasicInterfaceses';
 import { MetadataService } from '../metadata.service';
+
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import {MatDatepicker} from '@angular/material/datepicker';
 import * as _moment from 'moment';
-
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-
-
 import {default as _rollupMoment, Moment} from 'moment';
-const moment = _rollupMoment || _moment;
 
+const moment = _rollupMoment || _moment;
 export const MY_FORMATS = {
 	parse: {
 	  dateInput: 'MM/YYYY',
@@ -35,9 +33,6 @@ export const MY_FORMATS = {
   templateUrl: './occasional-expenses.component.html',
   styleUrls: ['./occasional-expenses.component.scss'],
   providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -48,15 +43,11 @@ export const MY_FORMATS = {
   ],
 })
 export class OccasionalExpensesComponent implements OnInit {
-
-	date = new FormControl(moment());
-
+	//firstPayment = new FormControl(moment());
 	dateClass = (d: Date): MatCalendarCellCssClasses => {
-		const date = d.getDate();
-		return (date === 1 || date === 20) ? 'example-custom-date-class' : '';
-	  }
-
-
+		const fullDate = d.getDate();
+		return (fullDate === 1 || fullDate === 20) ? 'example-custom-date-class' : '';
+	}
 	data:any;
 	newData:any;
 	occasionalExpencesForm: FormGroup;
@@ -75,23 +66,22 @@ export class OccasionalExpensesComponent implements OnInit {
 	}
 
 	paymentsChange(i){
-		
-		//this.occasionalExpencesFormObj.controls[i].controls.monthlyPayment.setValue(Math.round(parseInt(this.occasionalExpencesFormObj.controls[i].controls.amount.value)/parseInt(this.occasionalExpencesFormObj.controls[i].controls.payments.value)));
+		this.occasionalExpencesFormObj.controls[i].controls.monthlyPayment.setValue(Math.round(parseInt(this.occasionalExpencesFormObj.controls[i].controls.amount.value)/parseInt(this.occasionalExpencesFormObj.controls[i].controls.payments.value)));
 		//console.log(this.occasionalExpencesFormObj.controls);
 	}
 
 	chosenYearHandler(normalizedYear: Moment) {
-		const ctrlValue = this.date.value;
+		const ctrlValue = this.firstPayment.value;
 		ctrlValue.year(normalizedYear.year());
-		this.date.setValue(ctrlValue);
-	  }
+		this.firstPayment.setValue(ctrlValue);
+	}
 	
-	  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-		const ctrlValue = this.date.value;
+	chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+		const ctrlValue = this.firstPayment.value;
 		ctrlValue.month(normalizedMonth.month());
-		this.date.setValue(ctrlValue);
+		this.firstPayment.setValue(ctrlValue);
 		datepicker.close();
-	  }
+	}
 
 	addExpense(){
 		const item = this.fb.group({
@@ -101,26 +91,25 @@ export class OccasionalExpensesComponent implements OnInit {
 			methodsofPayment: "",
 			payments:"",
 			monthlyPayment: "",
-			startingMonth: "",
-			startingYear: ""
+			firstPayment: ""
 		})
 		this.occasionalExpencesFormObj.push(item);
 	}
 	removeExpense(i){
 		this.occasionalExpencesFormObj.removeAt(i)
-  }
+  	}
   
-  whatsThis(object){
-    console.log(object);
-  }
+  	whatsThis(object){
+    	console.log(object);
+  	}
 
-  getValue(mtop, id){
-    if(mtop == "1"){
-      return "";
-    }else{
-      return id;
-    }
-  }
+  	getValue(mtop, id){
+		if(mtop == "1"){
+			return "";
+		}else{
+			return id;
+		}
+  	}
 
 	ngOnInit(){
 		this.metadataService.cast.subscribe(user=> this.data = user);
@@ -140,7 +129,8 @@ export class OccasionalExpensesComponent implements OnInit {
 								payments: obj.payments,
 								monthlyPayment: obj.monthlyPayment,
 								startingMonth: obj.startingMonth,
-								startingYear: obj.startingYear
+								startingYear: obj.startingYear,
+								firstPayment: obj.firstPayment
 							})
 							this.occasionalExpencesFormObj.push(item);
 						});
@@ -152,17 +142,13 @@ export class OccasionalExpensesComponent implements OnInit {
 				});
 			}
 		}
-		
-
-			
-			this.occasionalExpencesForm.valueChanges.subscribe(val => {
-				this.metadataService.updataUser(this.occasionalExpencesForm.value);
-				this.metadataService.updateCounters();
-			});
+		this.occasionalExpencesForm.valueChanges.subscribe(val => {
+			this.metadataService.updataUser(this.occasionalExpencesForm.value);
+			this.metadataService.updateCounters();
+		});
 		
 	}
 	get occasionalExpencesFormObj(){
 		return this.occasionalExpencesForm.get("occasionalExpences") as FormArray
 	}
-
 }
