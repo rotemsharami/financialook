@@ -31,6 +31,9 @@ import { BankStatusComponent } from './bank-status/bank-status.component';
 import { OccasionalExpensesComponent } from './occasional-expenses/occasional-expenses.component';
 import { CreditCardComponent } from './credit-card/credit-card.component';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatMomentDateModule} from "@angular/material-moment-adapter";
+
+
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
     MatChipsModule,
     MatIconModule,
     MatDatepickerModule,
+    MatMomentDateModule,
     MatNativeDateModule,
     AppRoutingModule,
     MatRippleModule,
