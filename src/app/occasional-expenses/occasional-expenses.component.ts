@@ -10,20 +10,20 @@ import * as _moment from 'moment';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-//import {default as _rollupMoment, Moment} from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
 
-//const moment = _rollupMoment || _moment;
-// export const MY_FORMATS = {
-// 	parse: {
-// 	  dateInput: 'MM/YYYY',
-// 	},
-// 	display: {
-// 	  dateInput: 'MM/YYYY',
-// 	  monthYearLabel: 'MMM YYYY',
-// 	  dateA11yLabel: 'LL',
-// 	  monthYearA11yLabel: 'MMMM YYYY',
-// 	},
-//   };
+const moment = _rollupMoment || _moment;
+export const MY_FORMATS = {
+	parse: {
+	  dateInput: 'MM/YYYY',
+	},
+	display: {
+	  dateInput: 'MM/YYYY',
+	  monthYearLabel: 'MMM YYYY',
+	  dateA11yLabel: 'LL',
+	  monthYearA11yLabel: 'MMMM YYYY',
+	},
+  };
 
 
 
@@ -32,15 +32,15 @@ import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/mater
   selector: 'app-occasional-expenses',
   templateUrl: './occasional-expenses.component.html',
   styleUrls: ['./occasional-expenses.component.scss'],
-//   providers: [
-//     {
-//       provide: DateAdapter,
-//       useClass: MomentDateAdapter,
-//       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-//     },
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
 
-//     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-//   ],
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class OccasionalExpensesComponent implements OnInit {
 	//firstPayment = new FormControl(moment());
@@ -70,16 +70,16 @@ export class OccasionalExpensesComponent implements OnInit {
 		//console.log(this.occasionalExpencesFormObj.controls);
 	}
 
-	chosenYearHandler(normalizedYear: Moment) {
-		const ctrlValue = this.firstPayment.value;
-		ctrlValue.year(normalizedYear.year());
-		this.firstPayment.setValue(ctrlValue);
+	chosenYearHandler(normalizedYear: Moment, i) {
+		let m = moment();
+		m.year(normalizedYear.year());
+		this.occasionalExpencesFormObj.controls[i].controls.firstPayment.setValue(m);
 	}
 	
-	chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-		const ctrlValue = this.firstPayment.value;
-		ctrlValue.month(normalizedMonth.month());
-		this.firstPayment.setValue(ctrlValue);
+	chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>, i) {
+		let m =  moment(this.occasionalExpencesForm.value.occasionalExpences[i].firstPayments);
+		m.month(normalizedMonth.month());
+		this.occasionalExpencesFormObj.controls[i].controls.firstPayment.setValue(m);
 		datepicker.close();
 	}
 
