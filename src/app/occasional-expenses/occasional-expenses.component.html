@@ -5,7 +5,7 @@
             <h2>Occasional Expenses</h2>
         </div>
         <div formArrayName="occasionalExpences">
-            <div class="form_line row" *ngFor="let item of occasionalExpencesFormObj.controls; let i=index;" [formGroupName]="i">
+            <div class="form_line row" *ngFor="let item of occasionalExpencesFormObj.controls; index as j; index as k;" [formGroupName]="k">
                 <mat-form-field class="col">
                     <input matInput placeholder="Title" formControlName="title">
                 </mat-form-field>
@@ -14,16 +14,16 @@
                 </mat-form-field>
                 <mat-form-field class="col">
                     <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
-                        <mat-option *ngFor="let item of methodsofPaymentItems; let i=index;" [value]="item.id">{{item.name}}</mat-option>
+                        <mat-option *ngFor="let method of methodsofPaymentItems; let v=index;" [value]="method.id">{{method.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
 
 
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value != '1')">
-                    <input matInput [matDatepicker]="dp2" placeholder="Pay Day" [formControl]="payDay">
-                    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
-                    <mat-datepicker #dp2></mat-datepicker>
+                    <input matInput [matDatepicker]="j" placeholder="Pay Day" formControlName="payDay" [(ngModel)]="item.payDay">
+                    <mat-datepicker-toggle matSuffix [for]="j"></mat-datepicker-toggle>
+                    <mat-datepicker #j></mat-datepicker>
                 </mat-form-field>
 
 
@@ -33,13 +33,13 @@
 
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange(i)">
-                        <mat-option *ngFor="let day of dayOfMonthItems; let i=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
+                        <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
                 </mat-form-field>
-                <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
+                <!-- <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="firstPayment">
                     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                     <mat-datepicker #dp
@@ -48,7 +48,7 @@
                                     (monthSelected)="chosenMonthHandler($event, dp)"
                                     panelClass="example-month-picker">
                     </mat-datepicker>
-                  </mat-form-field>
+                  </mat-form-field> -->
                 <button mat-icon-button aria-label="Remove" (click)="removeExpense(i)">
                     <mat-icon>delete</mat-icon>
                   </button>
