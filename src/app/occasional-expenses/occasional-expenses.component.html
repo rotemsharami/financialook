@@ -21,9 +21,9 @@
 
 
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value != '1')">
-                    <input matInput [matDatepicker]="j" placeholder="Pay Day" formControlName="payDay" [(ngModel)]="item.payDay">
-                    <mat-datepicker-toggle matSuffix [for]="j"></mat-datepicker-toggle>
-                    <mat-datepicker #j></mat-datepicker>
+                    <input matInput [matDatepicker]="dpa_j" placeholder="Pay Day" formControlName="payDay">
+                    <mat-datepicker-toggle matSuffix [for]="dpa_j"></mat-datepicker-toggle>
+                    <mat-datepicker #dpa_j></mat-datepicker>
                 </mat-form-field>
 
 
