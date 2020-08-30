@@ -1,3 +1,5 @@
+import { DateFormatDirective } from './directives/date-format.directive';
+import { YearMonthFormatDirective } from './directives/year-month-format.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -47,6 +49,8 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     BankStatusComponent,
     OccasionalExpensesComponent,
     CreditCardComponent,
+    DateFormatDirective,
+    YearMonthFormatDirective
   ],
   imports: [
     HttpClientModule,

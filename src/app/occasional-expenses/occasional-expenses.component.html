@@ -17,13 +17,12 @@
                         <mat-option *ngFor="let method of methodsofPaymentItems; let v=index;" [value]="method.id">{{method.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value != '1')">
+                <mat-form-field appDateFormat class="col" *ngIf="(item.controls.methodsofPayment.value != '1')">
                     <input matInput [matDatepicker]="dpa_j" placeholder="Pay Day" formControlName="payDay">
                     <mat-datepicker-toggle matSuffix [for]="dpa_j"></mat-datepicker-toggle>
                     <mat-datepicker #dpa_j></mat-datepicker>
                 </mat-form-field>
-
-                <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
+                <mat-form-field appYearMonthFormat class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <input matInput [matDatepicker]="dpb_g" placeholder="Month and Year" formControlName="firstPayment">
                     <mat-datepicker-toggle matSuffix [for]="dpb_g"></mat-datepicker-toggle>
                     <mat-datepicker #dpb_g
@@ -32,11 +31,7 @@
                                     (monthSelected)="chosenMonthHandler($event, dpb_g, k)"
                                     panelClass="example-month-picker">
                     </mat-datepicker>
-                  </mat-form-field>
-
-
-
-
+                </mat-form-field>
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange(i)">
                         <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
@@ -45,8 +40,7 @@
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
                 </mat-form-field>
-
-                <button mat-icon-button aria-label="Remove" (click)="removeExpense(i)">
+                <button mat-icon-button aria-label="Remove" (click)="removeExpense(k)">
                     <mat-icon>delete</mat-icon>
                   </button>
             </div>

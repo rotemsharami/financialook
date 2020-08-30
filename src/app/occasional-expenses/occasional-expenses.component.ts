@@ -1,3 +1,5 @@
+import { YearMonthFormatDirective } from '../directives/year-month-format.directive';
+import { DateFormatDirective } from '../directives/date-format.directive';
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, FormArray} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
@@ -13,17 +15,17 @@ import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/mater
 import {default as _rollupMoment, Moment} from 'moment';
 
 const moment = _rollupMoment || _moment;
-export const MY_FORMATS = {
-	parse: {
-	  dateInput: 'MM/YYYY',
-	},
-	display: {
-	  dateInput: 'MM/YYYY',
-	  monthYearLabel: 'MMM YYYY',
-	  dateA11yLabel: 'LL',
-	  monthYearA11yLabel: 'MMMM YYYY',
-	},
-  };
+// export const MY_FORMATS = {
+// 	parse: {
+// 	  dateInput: 'MM/YYYY',
+// 	},
+// 	display: {
+// 	  dateInput: 'MM/YYYY',
+// 	  monthYearLabel: 'MMM YYYY',
+// 	  dateA11yLabel: 'LL',
+// 	  monthYearA11yLabel: 'MMMM YYYY',
+// 	},
+//   };
 
 
 
@@ -31,16 +33,7 @@ export const MY_FORMATS = {
 @Component({
   selector: 'app-occasional-expenses',
   templateUrl: './occasional-expenses.component.html',
-  styleUrls: ['./occasional-expenses.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ],
+  styleUrls: ['./occasional-expenses.component.scss']
 })
 export class OccasionalExpensesComponent implements OnInit {
 	//firstPayment = new FormControl(moment());
