@@ -1,5 +1,3 @@
-import { DateFormatDirective } from './directives/date-format.directive';
-import { YearMonthFormatDirective } from './directives/year-month-format.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,9 +33,8 @@ import { CreditCardComponent } from './credit-card/credit-card.component';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 
-
-
 @NgModule({
+  entryComponents: [OccasionalExpensesComponent],
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -48,9 +45,7 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     BasicDisplayComponent,
     BankStatusComponent,
     OccasionalExpensesComponent,
-    CreditCardComponent,
-    DateFormatDirective,
-    YearMonthFormatDirective
+    CreditCardComponent
   ],
   imports: [
     HttpClientModule,
@@ -75,9 +70,6 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
       {path: "BankStatus", component: BankStatusComponent},
       {path: "OccasionalExpenses", component: OccasionalExpensesComponent},
       {path: "CreditCard", component: CreditCardComponent}
-
-
-      
     ]),
     StoreModule.forRoot({ incomes: incomeReducer }),
     EffectsModule.forRoot([incomeEffects]),

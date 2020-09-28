@@ -6,10 +6,10 @@
         </div>
         <div formArrayName="occasionalExpences">
             <div class="form_line row" *ngFor="let item of occasionalExpencesFormObj.controls; index as j; index as g; index as k;" [formGroupName]="k">
-                <mat-form-field class="col">
+                <mat-form-field class="col-3">
                     <input matInput placeholder="Title" formControlName="title">
                 </mat-form-field>
-                <mat-form-field class="col">
+                <mat-form-field class="col-2">
                     <input matInput placeholder="Amount" formControlName="amount">
                 </mat-form-field>
                 <mat-form-field class="col">
@@ -17,27 +17,27 @@
                         <mat-option *ngFor="let method of methodsofPaymentItems; let v=index;" [value]="method.id">{{method.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field appDateFormat class="col" *ngIf="(item.controls.methodsofPayment.value != '1')">
+                <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value != '1')">
                     <input matInput [matDatepicker]="dpa_j" placeholder="Pay Day" formControlName="payDay">
                     <mat-datepicker-toggle matSuffix [for]="dpa_j"></mat-datepicker-toggle>
                     <mat-datepicker #dpa_j></mat-datepicker>
                 </mat-form-field>
-                <mat-form-field appYearMonthFormat class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
-                    <input matInput [matDatepicker]="dpb_g" placeholder="Month and Year" formControlName="firstPayment">
-                    <mat-datepicker-toggle matSuffix [for]="dpb_g"></mat-datepicker-toggle>
-                    <mat-datepicker #dpb_g
-                                    startView="multi-year"
-                                    (yearSelected)="chosenYearHandler($event, k)"
-                                    (monthSelected)="chosenMonthHandler($event, dpb_g, k)"
-                                    panelClass="example-month-picker">
-                    </mat-datepicker>
-                </mat-form-field>
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
-                    <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange(i)">
-                        <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
+                    <mat-select placeholder="firstPaymentYear" formControlName="firstPaymentYear">
+                        <mat-option *ngFor="let year of years; let v=index;" [value]="year.id">{{year.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col" *ngIf="(item.controls.methodsofPayment.value == '1')">
+                    <mat-select placeholder="firstPaymentMonth" formControlName="firstPaymentMonth">
+                        <mat-option *ngFor="let month of months; let v=index;" [value]="month.id">{{month.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-1" *ngIf="(item.controls.methodsofPayment.value == '1')">
+                    <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange(k)">
+                        <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="getValue(item.controls.payments.value, day.id)">{{day.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-2" *ngIf="(item.controls.methodsofPayment.value == '1')">
                     <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
                 </mat-form-field>
                 <button mat-icon-button aria-label="Remove" (click)="removeExpense(k)">
