@@ -10,6 +10,7 @@ import { MetadataService } from '../metadata.service';
 })
 export class ExpencesComponent implements OnInit {
 	data:any;
+	
 	newData:any;
 	expencesForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
@@ -61,6 +62,7 @@ export class ExpencesComponent implements OnInit {
 		this.expencesForm.valueChanges.subscribe(val => {
 			this.metadataService.updataUser(this.expencesForm.value);
 			this.metadataService.updateCounters();
+
 		});
 	}
 	get expencesFormObj(){

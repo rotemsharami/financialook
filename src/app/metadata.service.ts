@@ -63,16 +63,40 @@ export class MetadataService {
 		];
 		return data;
 	};
-	updataUser(data: any){
-		let dataFromCookie = {};
-		if(this.cookieServic.check("FL")){
-			dataFromCookie = JSON.parse(this.cookieServic.get("FL"));
-		}else{
 
+
+
+	updataUser(data: any){
+		let dataObject = {};
+		if(this.cookieServic.check("FL")){
+			dataObject = JSON.parse(this.cookieServic.get("FL"));
+			console.log(dataObject);
+		}else{
+			dataObject[data.key] = [];
 		}
-		dataFromCookie[Object.keys(data)[0]] = data[Object.keys(data)[0]];
-		this.data.next(dataFromCookie);
-		this.cookieServic.set("FL", JSON.stringify(dataFromCookie));
+
+		
+		console.log(data);
+
+
+				
+		dataObject[data.key].push(data.data);
+		this.data.next(dataObject);
+		this.cookieServic.set("FL", JSON.stringify(dataObject));
+				
+
+		
+
+
+		// let dataFromCookie = {};
+		// if(this.cookieServic.check("FL")){
+		// 	dataFromCookie = JSON.parse(this.cookieServic.get("FL"));
+		// }else{
+
+		// }
+		// dataFromCookie[Object.keys(data)[0]] = data[Object.keys(data)[0]];
+		// this.data.next(dataFromCookie);
+		// this.cookieServic.set("FL", JSON.stringify(dataFromCookie));
 
 	}
 

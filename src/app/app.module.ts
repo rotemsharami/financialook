@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+
 import {MatSelectModule } from '@angular/material/select';
 import {MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule } from '@angular/material/checkbox';
@@ -53,6 +55,7 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatTableModule,
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
