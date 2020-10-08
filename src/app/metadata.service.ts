@@ -64,40 +64,49 @@ export class MetadataService {
 		return data;
 	};
 
+	removeItemFromData(id: any){
+		let newData = [];
+		let dataObject = JSON.parse(this.cookieServic.get("FL"));
+		dataObject["occasionalExpences"].forEach((item, index) => {
+			if(item.id != id){
+				newData.push(item);
+			}
+		});
+		dataObject["occasionalExpences"] = newData;
+		this.data.next(dataObject);
+		this.cookieServic.set("FL", JSON.stringify(dataObject));
+	}
 
+	editItem(updatedItem){
+		let newData = [];
+		let dataObject = JSON.parse(this.cookieServic.get("FL"));
+		dataObject["occasionalExpences"].forEach((item, index) => {
+			if(item.id != updatedItem.id){
+				newData.push(item);
+			}else{
+				newData.push(updatedItem);
+			}
+		});
+		dataObject["occasionalExpences"] = newData;
+		this.data.next(dataObject);
+		this.cookieServic.set("FL", JSON.stringify(dataObject));
+	}
 
 	updataUser(data: any){
 		let dataObject = {};
 		if(this.cookieServic.check("FL")){
 			dataObject = JSON.parse(this.cookieServic.get("FL"));
-			console.log(dataObject);
 		}else{
 			dataObject[data.key] = [];
 		}
-
-		
-		console.log(data);
-
-
-				
+		let id = 0;
+		if(dataObject[data.key].length > 0){
+			id = parseInt(dataObject[data.key][dataObject[data.key].length-1]["id"])+1;
+		}
+		data.data.id = id;
 		dataObject[data.key].push(data.data);
 		this.data.next(dataObject);
 		this.cookieServic.set("FL", JSON.stringify(dataObject));
-				
-
-		
-
-
-		// let dataFromCookie = {};
-		// if(this.cookieServic.check("FL")){
-		// 	dataFromCookie = JSON.parse(this.cookieServic.get("FL"));
-		// }else{
-
-		// }
-		// dataFromCookie[Object.keys(data)[0]] = data[Object.keys(data)[0]];
-		// this.data.next(dataFromCookie);
-		// this.cookieServic.set("FL", JSON.stringify(dataFromCookie));
-
 	}
 
 	updateCounters(){

@@ -10,7 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-
+import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule } from '@angular/material/select';
 import {MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule } from '@angular/material/checkbox';
@@ -25,7 +25,7 @@ import { HomeComponent } from './home.component';
 import { IncomeComponent } from './income.component';
 import { ExpencesComponent } from './expences/expences.component';
 import { BasicDisplayComponent } from './basic-display/basic-display.component';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import { incomeEffects } from "./incomes/incomes.effects"
 import  {incomeReducer} from "./incomes/incomes.reducer"
 import { environment } from 'src/environments/environment';
@@ -34,9 +34,15 @@ import { OccasionalExpensesComponent } from './occasional-expenses/occasional-ex
 import { CreditCardComponent } from './credit-card/credit-card.component';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
+import {MatListModule} from '@angular/material/list';
+import { DialogComponent } from './dialog/dialog.component';
+
 
 @NgModule({
-  entryComponents: [OccasionalExpensesComponent],
+  entryComponents: [
+    OccasionalExpensesComponent,
+    DialogComponent
+  ],
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -47,15 +53,18 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     BasicDisplayComponent,
     BankStatusComponent,
     OccasionalExpensesComponent,
-    CreditCardComponent
+    CreditCardComponent,
+    DialogComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatDialogModule,
     MatInputModule,
     MatTableModule,
+    MatListModule,
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
