@@ -82,6 +82,49 @@ export class OccasionalExpensesComponent implements OnInit {
 		});
 		return result;
 	}
+
+	setPaymentPeriod(row){
+		let result = "";
+		if(parseInt(row.payments) > 1){
+			let today = moment();
+			let firstPayment = moment(row.firstPaymentYear+"-"+row.firstPaymentMonth+"-"+"10");
+			let lastPayment = moment(firstPayment).add(parseInt(row.payments)-1, 'M');
+			result = firstPayment.format('DD/MM/YYYY')+" - "+lastPayment.format('DD/MM/YYYY');
+		}
+		return result;
+	}
+
+	setPayday(row){
+		let result = "";
+		if(parseInt(row.payments) > 1){
+			let thisYear = moment().format("YYYY");
+			let thisMonth = moment().format("MM");
+
+
+			result = moment(thisYear+"-"+thisMonth+"-"+"10").format('DD/MM/YYYY');
+
+
+		}
+		else{
+			console.log(row.payDay);
+			result = moment(row.payDay).format('DD/MM/YYYY');
+		}
+		return result;
+	}
+
+	setPayments(row){
+		let result = "";
+		if(parseInt(row.payments) > 1){
+
+			
+		}
+		else{
+
+			
+		}
+		return result;
+	}
+
 	editItem (row){
 		this.dataSource.forEach((obj, index) => {
 			delete obj ["showActions"];
@@ -98,7 +141,7 @@ export class OccasionalExpensesComponent implements OnInit {
 			amount: ["", [Validators.required]],
 			payDay: "",
 			methodsofPayment: ["", [Validators.required]],
-			payments:"",
+			payments:1,
 			monthlyPayment: "",
 			firstPaymentMonth: "",
 			firstPaymentYear: ""
@@ -120,7 +163,7 @@ export class OccasionalExpensesComponent implements OnInit {
 			}
 		});
 		this.metadataService.cast.subscribe(user => this.dataSource = user.occasionalExpences);
-		this.displayedColumns = ['payDay','title','amount','methodsofPayment','payments','monthlyPayment','firstPayment', 'monthlyPayment', 'actions'];
+		this.displayedColumns = ['payDay','title','amount','methodsofPayment', 'payments', 'monthlyPayment', 'paymentPeriod', 'actions'];
 	}
 	get occasionalExpencesFormObj(){
 		return this.occasionalExpencesForm.get("occasionalExpences") as FormGroup
