@@ -1,10 +1,11 @@
 <h1 mat-dialog-title *ngIf="data.type == 'remove'">Are you shue you want do remove {{data.item.title}}?</h1>
-<h1 mat-dialog-title *ngIf="data.type == 'edit'">Edit {{data.item.title}}?</h1>
+<h1 mat-dialog-title *ngIf="data.type == 'edit'">Edit {{data.item.title}}</h1>
+<h1 mat-dialog-title *ngIf="data.type == 'add'">Add new Ocasional Expense</h1>
 <div mat-dialog-actions *ngIf="data.type == 'remove'">
   <button mat-button mat-dialog-close mat-dialog-close="true">Yes</button>
   <button mat-button mat-dialog-close  mat-dialog-close="false">No</button>
 </div>
-<form *ngIf="data.type == 'edit'" [formGroup]="occasionalExpencesForm">
+<form *ngIf="data.type == 'edit' || data.type == 'add'" [formGroup]="occasionalExpencesForm">
     <br>
     <div>
         <div class="form_line row">
@@ -15,31 +16,37 @@
                 <input matInput placeholder="Amount" formControlName="amount" (change)="paymentsChange()">
             </mat-form-field>
             <mat-form-field class="col-2">
-                <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
+                <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment" (selectionChange)="methodsofPaymentChange()">
                     <mat-option *ngFor="let method of methodsofPaymentItems; let v=index;" [value]="method.id">{{method.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value != '1')">
+            <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '2' || occasionalExpencesForm.controls.methodsofPayment.value == '3')">
                 <input matInput [matDatepicker]="payDay" placeholder="Pay Day" formControlName="payDay">
                 <mat-datepicker-toggle matSuffix [for]="payDay"></mat-datepicker-toggle>
                 <mat-datepicker #payDay></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
-                <mat-select placeholder="firstPaymentYear" formControlName="firstPaymentYear">
-                    <mat-option *ngFor="let year of years; let v=index;" [value]="year.id">{{year.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
-                <mat-select placeholder="firstPaymentMonth" formControlName="firstPaymentMonth">
-                    <mat-option *ngFor="let month of months; let v=index;" [value]="month.id">{{month.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-1" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
+
+            <mat-form-field class="col-1" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1' || occasionalExpencesForm.controls.methodsofPayment.value == '4')">
                 <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange()">
                     <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="day.id">{{day.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-2" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
+            <mat-form-field class="col-1" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '4')">
+                <mat-select placeholder="payDayCheck" formControlName="payDayCheck">
+                    <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="day.id">{{day.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1') || occasionalExpencesForm.controls.methodsofPayment.value == '4'">
+                <mat-select placeholder="firstPaymentYear" formControlName="firstPaymentYear">
+                    <mat-option *ngFor="let year of years; let v=index;" [value]="year.id">{{year.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1') || occasionalExpencesForm.controls.methodsofPayment.value == '4'">
+                <mat-select placeholder="firstPaymentMonth" formControlName="firstPaymentMonth">
+                    <mat-option *ngFor="let month of months; let v=index;" [value]="month.id">{{month.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-2" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1') || occasionalExpencesForm.controls.methodsofPayment.value == '4'">
                 <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
             </mat-form-field>
         </div>
@@ -48,5 +55,10 @@
 </form>
 <div mat-dialog-actions *ngIf="data.type == 'edit'">
     <button mat-button mat-dialog-close (click)="saveEditation()">Save</button>
+    <button mat-button mat-dialog-close (click)="cancelEditation()" >Cancel</button>
+</div>
+
+<div mat-dialog-actions *ngIf="data.type == 'add'">
+    <button mat-button mat-dialog-close (click)="addNewItem()">Add</button>
     <button mat-button mat-dialog-close (click)="cancelEditation()" >Cancel</button>
 </div>

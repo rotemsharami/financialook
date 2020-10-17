@@ -49,7 +49,7 @@ export class MetadataService {
 		for (var i = startingYear; i <= (new Date().getFullYear() + 1); i++) {
 			data.push({name: i, id: i});
 		}
-		return data;
+		return data.reverse();
 	};
 
 

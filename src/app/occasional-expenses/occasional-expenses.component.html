@@ -1,57 +1,9 @@
-<div class="section col-12">
-    <form [formGroup]="occasionalExpencesForm" (ngSubmit) = "onSubmit(occasionalExpencesForm)">
-        <br>
-        <div class="basicExpences row">
-            <h2>Occasional Expenses</h2>
-        </div>
-        <div>
-            <div class="form_line row">
-                <mat-form-field class="col-3">
-                    <input matInput placeholder="Title" formControlName="title">
-                </mat-form-field>
-                <mat-form-field class="col-1">
-                    <input matInput placeholder="Amount" formControlName="amount" (change)="paymentsChange()">
-                </mat-form-field>
-                <mat-form-field class="col-2">
-                    <mat-select placeholder="Methods of Payment" formControlName="methodsofPayment">
-                        <mat-option *ngFor="let method of methodsofPaymentItems; let v=index;" [value]="method.id">{{method.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value != '1')">
-                    <input matInput [matDatepicker]="payDay" placeholder="Pay Day" formControlName="payDay">
-                    <mat-datepicker-toggle matSuffix [for]="payDay"></mat-datepicker-toggle>
-                    <mat-datepicker #payDay></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
-                    <mat-select placeholder="firstPaymentYear" formControlName="firstPaymentYear">
-                        <mat-option *ngFor="let year of years; let v=index;" [value]="year.id">{{year.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
-                    <mat-select placeholder="firstPaymentMonth" formControlName="firstPaymentMonth">
-                        <mat-option *ngFor="let month of months; let v=index;" [value]="month.id">{{month.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col-1" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
-                    <mat-select placeholder="Payments" formControlName="payments" (selectionChange)="paymentsChange()">
-                        <mat-option *ngFor="let day of dayOfMonthItems; let ii=index;" [value]="day.id">{{day.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col-2" *ngIf="(occasionalExpencesForm.controls.methodsofPayment.value == '1')">
-                    <input matInput placeholder="Monthly Payment" formControlName="monthlyPayment">
-				</mat-form-field>
-				<button mat-icon-button aria-label="Add">
-                    <mat-icon>add</mat-icon>
-                  </button>
-            </div>
-		</div>
-        <br>
-    </form>
-</div>
-<div class="col-12">
+<div class="col-12 row">
+    <br>
+    <h2>Occasional Expenses</h2>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="payDay">
-			<th mat-header-cell *matHeaderCellDef>Pay Day</th>
+			<th mat-header-cell *matHeaderCellDef>Next Payday</th>
 			<td mat-cell *matCellDef="let element">{{setPayday(element)}}</td>
 		  </ng-container>
         <ng-container matColumnDef="title">
@@ -66,36 +18,51 @@
           <th mat-header-cell *matHeaderCellDef>Methods of<br>Payment</th>
           <td mat-cell *matCellDef="let element">{{setMethodsofPayment(element.methodsofPayment)}}</td>
         </ng-container>
-
         <ng-container matColumnDef="payments">
             <th mat-header-cell *matHeaderCellDef>Payments</th>
             <td mat-cell *matCellDef="let element">{{element.payments}}</td>
           </ng-container>
-        
         <ng-container matColumnDef="monthlyPayment">
             <th mat-header-cell *matHeaderCellDef>monthly<br>Payment</th>
-            <td mat-cell *matCellDef="let element">{{element.monthlyPayment}}₪</td>
+            <td mat-cell *matCellDef="let element">{{setMonthlyPayment(element)}}<span *ngIf="isPayments(element)">₪</span></td>
           </ng-container>
-          <ng-container matColumnDef="paymentPeriod">
-            <th mat-header-cell *matHeaderCellDef>Payment<br>Period</th>
-            <td mat-cell *matCellDef="let element">{{setPaymentPeriod(element)}}</td>
+          <ng-container matColumnDef="firstPayment">
+            <th mat-header-cell *matHeaderCellDef>First<br>Payment</th>
+            <td mat-cell *matCellDef="let element">{{setPaymentPeriod(element, "first")}}</td>
           </ng-container>
-
-          
+          <ng-container matColumnDef="lastPayment">
+            <th mat-header-cell *matHeaderCellDef>Last<br>Payment</th>
+            <td mat-cell *matCellDef="let element">{{setPaymentPeriod(element, "last")}}</td>
+          </ng-container>
+          <ng-container matColumnDef="payed">
+            <th mat-header-cell *matHeaderCellDef>Payed</th>
+            <td mat-cell *matCellDef="let element">{{setPayed(element)}}<span *ngIf="isPayments(element)">₪</span></td>
+          </ng-container>
+          <ng-container matColumnDef="payedPayments">
+            <th mat-header-cell *matHeaderCellDef>Payed<br>Payments</th>
+            <td mat-cell *matCellDef="let element">{{setpayedPayments(element)}}<span *ngIf="isPayments(element)">₪</span></td>
+          </ng-container>
+          <ng-container matColumnDef="balanceOfPayment">
+            <th mat-header-cell *matHeaderCellDef>Balance<br>of Payment</th>
+            <td mat-cell *matCellDef="let element">{{setbalanceOfPayment(element)}}<span *ngIf="isPayments(element)">₪</span></td>
+          </ng-container>
           <ng-container matColumnDef="actions">
 			<th mat-header-cell *matHeaderCellDef></th>
 			<td mat-cell *matCellDef="let row">
-				
-					<button mat-button (click)="editItem(row)" *ngIf="!showHideActions(row)" ><mat-icon>more_vert</mat-icon></button>
-					<mat-list  class="fl_actions" role="list" *ngIf="showHideActions(row)"> 
-						<mat-list-item role="listitem"><button mat-button color="basic" (click)="openDialog(row, 'edit')">Edit</button></mat-list-item>
-						<mat-list-item role="listitem"><button mat-button color="basic" (click)="openDialog(row, 'remove')">Remove</button></mat-list-item>
-					</mat-list>
-					
-				
+                <button mat-button (click)="editItem(row)" *ngIf="!showHideActions(row)" ><mat-icon>more_vert</mat-icon></button>
+                <mat-list  class="fl_actions" role="list" *ngIf="showHideActions(row)"> 
+                    <mat-list-item role="listitem"><button mat-button color="basic" (click)="openDialog(row, 'edit')">Edit</button></mat-list-item>
+                    <mat-list-item role="listitem"><button mat-button color="basic" (click)="openDialog(row, 'remove')">Remove</button></mat-list-item>
+                </mat-list>
 			</td>
           </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    </table>
+    <br> 
+    <div class="addOtherExpencesButton row col-12">
+        <br> 
+        <button mat-raised-button color="primary" (click)="openDialog(null, 'add')">Add</button>
+    </div>
 </div>
+

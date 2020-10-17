@@ -1,5 +1,4 @@
 import {Component, OnInit, Inject} from "@angular/core";
-import {FormBuilder, FormControl, FormGroup, FormArray, Validators} from "@angular/forms";
 import { DayOfMonth } from '../interfaces/DayOfMonth';
 import { MethodsofPayment } from '../interfaces/BasicInterfaceses';
 import { MetadataService } from '../metadata.service';
@@ -10,6 +9,7 @@ export interface OccasionalExpensesItem{
 	title: string;
 	amount: string;
 	payDay: string;
+	payDayCheck: string;
 	methodsofPayment: string;
 	payments: string;
 	monthlyPayment: string;
@@ -25,23 +25,18 @@ export class OccasionalExpensesComponent implements OnInit {
 	displayedColumns: string[];
 	dataSource: OccasionalExpensesItem[];
 	newData:any;
-	occasionalExpencesForm: FormGroup;
 	dayOfMonthItems: DayOfMonth[];
 	months: DayOfMonth[];
 	years: DayOfMonth[];
 	methodsofPaymentItems: MethodsofPayment[];
 	constructor(
 		private metadataService: MetadataService,
-		private fb: FormBuilder,
 		public dialog: MatDialog,
-		//private dialogReff: MatDialogRef<DialogComponent>,
 		){
-		this.dayOfMonthItems = this.metadataService.getDayOfMonth();
 		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
-		this.months = this.metadataService.getMonths();
-		this.years = this.metadataService.getYears();
 	}
-	openDialog(row, type){
+
+	openDialog(row=null, type){
 		let dialogRef = this.dialog.open(DialogComponent, {data: {item: row, type: type}});
 		dialogRef.afterClosed().subscribe(result => {
 			switch(type){
@@ -56,21 +51,20 @@ export class OccasionalExpensesComponent implements OnInit {
 						this.metadataService.removeItemFromData(row.id);
 					}
 					break;
+
+				case "add":
+					
+					if(result != "false"){
+						this.metadataService.updataUser({key:"occasionalExpences", data: result});
+						this.metadataService.updateCounters();
+					}
+					break;
 			}
 		})
-	}
-	paymentsChange(){
-		let value = parseInt(this.occasionalExpencesForm.value.amount) / parseInt(this.occasionalExpencesForm.value.payments);
-		let n = Math.round((value + Number.EPSILON) * 100) / 100;
-		if(isNaN(n)){
-			n = 0;
-		}
-		this.occasionalExpencesForm.controls.monthlyPayment.setValue(n);
 	}
 	showHideActions(row){
 		return row.showActions != undefined;
 	}
-
 	setDate(date){
 		return moment(date).format('DD/MM/YYYY');
 	}
@@ -82,14 +76,45 @@ export class OccasionalExpensesComponent implements OnInit {
 		});
 		return result;
 	}
-
-	setPaymentPeriod(row){
+	setMonthlyPayment(row){
+		if(this.isPayments(row)){
+			return row.monthlyPayment;
+		}
+		else{
+			return "";
+		}
+	}
+	setPaymentPeriod(row, type){
 		let result = "";
 		if(parseInt(row.payments) > 1){
-			let today = moment();
 			let firstPayment = moment(row.firstPaymentYear+"-"+row.firstPaymentMonth+"-"+"10");
-			let lastPayment = moment(firstPayment).add(parseInt(row.payments)-1, 'M');
-			result = firstPayment.format('DD/MM/YYYY')+" - "+lastPayment.format('DD/MM/YYYY');
+			switch(type){
+				case "first":
+					result = firstPayment.format('DD/MM/YYYY');
+					break;
+				case "last":
+					result = firstPayment.add(parseInt(row.payments)-1, 'M').format('DD/MM/YYYY');
+					break;
+			}
+		}
+		return result;
+	}
+
+	setpayedPayments(row){
+		let result = "";
+		if(parseInt(row.payments) > 1){
+			let today = moment().format('DD');
+			let payDay;
+			switch(row.methodsofPayment){
+				case "1":
+					payDay = 10;
+					break;
+				case "4":
+					payDay = row.payDayCheck;
+					break;
+			}
+			let nextMonthPayDay = today <= payDay ? moment().format("MM") : moment().add(1, 'M').format('MM');
+			let nextPayment = moment(moment().format("YYYY")+"-"+nextMonthPayDay+"-"+payDay);
 		}
 		return result;
 	}
@@ -99,28 +124,57 @@ export class OccasionalExpensesComponent implements OnInit {
 		if(parseInt(row.payments) > 1){
 			let thisYear = moment().format("YYYY");
 			let thisMonth = moment().format("MM");
-
-
 			result = moment(thisYear+"-"+thisMonth+"-"+"10").format('DD/MM/YYYY');
-
-
 		}
 		else{
-			console.log(row.payDay);
+			//console.log(row.payDay);
 			result = moment(row.payDay).format('DD/MM/YYYY');
 		}
 		return result;
 	}
-
+	isPayments(row){
+		let result = false;
+		if(parseInt(row.payments) > 1){
+			result = true;
+		}
+		return result;
+	}
+	setPayed(row){
+		let result;
+		if(parseInt(row.payments) > 1){
+			let payedPayments = parseInt(this.setPayments(row).split("/")[0]);
+			result = payedPayments * parseInt(row.monthlyPayment);
+		}
+		return result;
+	}
+	setbalanceOfPayment(row){
+		let result;
+		if(parseInt(row.payments) > 1){
+			result = parseInt(row.amount) - this.setPayed(row);
+		}
+		return result;
+	}
 	setPayments(row){
 		let result = "";
 		if(parseInt(row.payments) > 1){
-
-			
-		}
-		else{
-
-			
+			let today = moment().format('DD/MM/YYYY');
+			let thisYear = moment().format("YYYY");
+			let thisMonth = moment().format("MM");
+			let nextPayment = moment(thisYear+"-"+thisMonth+"-"+"10");
+			let firstPayment = moment(row.firstPaymentYear+"-"+row.firstPaymentMonth+"-"+"10");
+			let lastPayment = moment(firstPayment).add(parseInt(row.payments)-1, 'M').format('DD/MM/YYYY');
+			if(moment().format('DD/MM/YYYY') > firstPayment.format('DD/MM/YYYY')){
+				let payments = 1;
+				// while(firstPayment.format('DD/MM/YYYY') < moment().format('DD/MM/YYYY')){
+				// 	payments++;
+				// 	firstPayment.add(1, "M");
+				// }
+				result = payments+"/"+row.payments;
+				
+			}
+			else{
+				result = row.payments+"/"+row.payments;
+			}
 		}
 		return result;
 	}
@@ -131,41 +185,8 @@ export class OccasionalExpensesComponent implements OnInit {
 		});
 		row.showActions = true;
 	}
-	onSubmit(formValues) {
-		this.metadataService.updataUser({key:"occasionalExpences", data: formValues.value});
-		this.metadataService.updateCounters();
-	}
 	ngOnInit(){
-		this.occasionalExpencesForm = this.fb.group({
-			title: ["", [Validators.required]],
-			amount: ["", [Validators.required]],
-			payDay: "",
-			methodsofPayment: ["", [Validators.required]],
-			payments:1,
-			monthlyPayment: "",
-			firstPaymentMonth: "",
-			firstPaymentYear: ""
-		});
-		this.occasionalExpencesForm.get('methodsofPayment').valueChanges
-		.subscribe(value => {
-			if(value == "1"){
-				console.log("yes");
-				this.occasionalExpencesForm.get('payments').setValidators(Validators.required);
-				this.occasionalExpencesForm.get('firstPaymentMonth').setValidators(Validators.required);
-				this.occasionalExpencesForm.get('firstPaymentYear').setValidators(Validators.required);
-				this.occasionalExpencesForm.get('payDay').clearValidators();
-			}else{
-				console.log("no");
-				this.occasionalExpencesForm.get('payments').clearValidators();
-				this.occasionalExpencesForm.get('firstPaymentMonth').clearValidators();
-				this.occasionalExpencesForm.get('firstPaymentYear').clearValidators();
-				this.occasionalExpencesForm.get('payDay').setValidators(Validators.required);
-			}
-		});
 		this.metadataService.cast.subscribe(user => this.dataSource = user.occasionalExpences);
-		this.displayedColumns = ['payDay','title','amount','methodsofPayment', 'payments', 'monthlyPayment', 'paymentPeriod', 'actions'];
-	}
-	get occasionalExpencesFormObj(){
-		return this.occasionalExpencesForm.get("occasionalExpences") as FormGroup
+		this.displayedColumns = ['payDay','title','amount','methodsofPayment', 'payments', 'monthlyPayment', 'firstPayment', 'lastPayment', 'payed', 'payedPayments', 'balanceOfPayment', 'actions'];
 	}
 }
