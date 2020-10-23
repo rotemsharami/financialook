@@ -35,7 +35,6 @@ export class OccasionalExpensesComponent implements OnInit {
 		){
 		this.methodsofPaymentItems = this.metadataService.getMethodsofPayment();
 	}
-
 	openDialog(row=null, type){
 		let dialogRef = this.dialog.open(DialogComponent, {data: {item: row, type: type}});
 		dialogRef.afterClosed().subscribe(result => {
@@ -53,8 +52,7 @@ export class OccasionalExpensesComponent implements OnInit {
 					break;
 
 				case "add":
-					
-					if(result != "false"){
+					if(result != undefined){
 						this.metadataService.updataUser({key:"occasionalExpences", data: result});
 						this.metadataService.updateCounters();
 					}
@@ -141,10 +139,29 @@ export class OccasionalExpensesComponent implements OnInit {
 	}
 	setPayed(row){
 		let result;
-		if(parseInt(row.payments) > 1){
-			let payedPayments = parseInt(this.setPayments(row).split("/")[0]);
-			result = payedPayments * parseInt(row.monthlyPayment);
+		switch(row.methodsofPayment){
+			case "2":
+				break;
+			case "3":
+				break;
+			case "1":
+			case "4":
+				if(parseInt(row.payments) > 1){
+					
+
+			
+					console.log(row);
+					let payedPayments = parseInt(this.setPayments(row).split("/")[0]);
+					result = payedPayments * parseInt(row.monthlyPayment);
+				}
+
+				break;
+
+
 		}
+
+		
+
 		return result;
 	}
 	setbalanceOfPayment(row){

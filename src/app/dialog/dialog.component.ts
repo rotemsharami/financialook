@@ -62,15 +62,16 @@ export class DialogComponent implements OnInit {
 		this.dialogRef.close();
 	}
 	ngOnInit(): void {
+		let add = this.data.type == "add";
 		this.occasionalExpencesForm = this.fb.group({
-			title: this.data.type == "add" ? "" : [this.data.item.title, [Validators.required]],
-			amount: this.data.type == "add" ? "" : [this.data.item.amount, [Validators.required]],
-			payDay: this.data.type == "add" ? "" : this.data.item.payDay,
-			methodsofPayment: this.data.type == "add" ? "" : [this.data.item.methodsofPayment, [Validators.required]],
-			payments: this.data.type == "add" ? "" : this.data.item.payments,
-			monthlyPayment: this.data.type == "add" ? "" : this.data.item.monthlyPayment,
-			firstPaymentMonth: this.data.type == "add" ? "" : this.data.item.firstPaymentMonth,
-			firstPaymentYear: this.data.type == "add" ? "" : this.data.item.firstPaymentYear
+			title: [add ? "" : this.data.item.title, [Validators.required]],
+			amount: [add ? "" : this.data.item.amount, [Validators.required]],
+			payDay: [add ? "" : this.data.item.payDay, [Validators.required]],
+			checkPayDay: [add ? "" : this.data.item.checkPayDay, [Validators.required]],
+			methodsofPayment: [add ? "" : this.data.item.methodsofPayment, [Validators.required]],
+			monthlyPayment: [add ? "" : this.data.item.monthlyPayment, [Validators.required]],
+			firstPaymentMonth: [add ? "" : this.data.item.firstPaymentMonth, [Validators.required]],
+			firstPaymentYear: [add ? "" : this.data.item.firstPaymentYear, [Validators.required]],
 		});
 	}
 	get occasionalExpencesFormObj(){
