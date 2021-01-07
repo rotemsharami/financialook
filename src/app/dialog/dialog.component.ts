@@ -28,6 +28,7 @@ export class DialogComponent implements OnInit {
 	}
 	paymentsChange(){
 		let value = parseInt(this.occasionalExpencesForm.value.amount) / parseInt(this.occasionalExpencesForm.value.payments);
+		console.log(value);
 		let n = Math.round((value + Number.EPSILON) * 100) / 100;
 		if(isNaN(n)){
 			n = 0;
@@ -68,6 +69,7 @@ export class DialogComponent implements OnInit {
 			amount: [add ? "" : this.data.item.amount, [Validators.required]],
 			payDay: [add ? "" : this.data.item.payDay, [Validators.required]],
 			checkPayDay: [add ? "" : this.data.item.checkPayDay, [Validators.required]],
+			payments: [add ? "" : this.data.item.payments, [Validators.required]],
 			methodsofPayment: [add ? "" : this.data.item.methodsofPayment, [Validators.required]],
 			monthlyPayment: [add ? "" : this.data.item.monthlyPayment, [Validators.required]],
 			firstPaymentMonth: [add ? "" : this.data.item.firstPaymentMonth, [Validators.required]],

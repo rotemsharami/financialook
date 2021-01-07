@@ -100,6 +100,15 @@ export class OccasionalExpensesComponent implements OnInit {
 
 	setpayedPayments(row){
 		let result = "";
+		switch(row.methodsofPayment){
+			case "1":
+			case "4":
+				payDay = row.payDayCheck;
+				break;
+		}
+
+
+		
 		if(parseInt(row.payments) > 1){
 			let today = moment().format('DD');
 			let payDay;
@@ -147,10 +156,16 @@ export class OccasionalExpensesComponent implements OnInit {
 			case "1":
 			case "4":
 				if(parseInt(row.payments) > 1){
+					switch(row.methodsofPayment){
+						case "2":
+							break;
+					}					
 					
 
+
+					
 			
-					console.log(row);
+					
 					let payedPayments = parseInt(this.setPayments(row).split("/")[0]);
 					result = payedPayments * parseInt(row.monthlyPayment);
 				}
