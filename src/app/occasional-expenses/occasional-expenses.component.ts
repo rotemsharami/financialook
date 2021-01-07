@@ -103,7 +103,7 @@ export class OccasionalExpensesComponent implements OnInit {
 		switch(row.methodsofPayment){
 			case "1":
 			case "4":
-				payDay = row.payDayCheck;
+				let payDay = row.payDayCheck;
 				break;
 		}
 
@@ -219,6 +219,6 @@ export class OccasionalExpensesComponent implements OnInit {
 	}
 	ngOnInit(){
 		this.metadataService.cast.subscribe(user => this.dataSource = user.occasionalExpences);
-		this.displayedColumns = ['payDay','title','amount','methodsofPayment', 'payments', 'monthlyPayment', 'firstPayment', 'lastPayment', 'payed', 'payedPayments', 'balanceOfPayment', 'actions'];
+		this.displayedColumns = ['payDay','title','amount','methodsofPayment', 'payments', 'payDayCheck', 'monthlyPayment', 'firstPayment', 'lastPayment', 'payed', 'payedPayments', 'balanceOfPayment', 'actions'];
 	}
 }
